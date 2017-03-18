@@ -170,6 +170,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
+	/*
 	int x, y0, y1;
 	
 	x = (pos.x + size.x - 1) / tileSizeX;
@@ -180,8 +181,9 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 		if(map[y*mapSize.x+x] != 1)
 			return true;
 	}
-	
+	*/
 	return false;
+	
 }
 
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
