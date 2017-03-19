@@ -32,15 +32,18 @@ Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Te
 	shaderProgram = program;
 	currentAnimation = -1;
 	position = glm::vec2(0.f);
+	
 }
 
 void Sprite::update(int deltaTime)
 {
+	animacionAcabada = false;
 	if(currentAnimation >= 0)
 	{
 		timeAnimation += deltaTime;
 		while(timeAnimation > animations[currentAnimation].millisecsPerKeyframe)
 		{
+			if (currentKeyframe + 1 == animations[currentAnimation].keyframeDispl.size()) animacionAcabada = true;
 			timeAnimation -= animations[currentAnimation].millisecsPerKeyframe;
 			currentKeyframe = (currentKeyframe + 1) % animations[currentAnimation].keyframeDispl.size();
 		}

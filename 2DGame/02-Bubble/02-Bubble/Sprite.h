@@ -34,6 +34,8 @@ public:
 	
 	void setPosition(const glm::vec2 &pos);
 
+	bool animacionAcabada;
+
 private:
 	Texture *texture;
 	ShaderProgram *shaderProgram;
@@ -45,6 +47,7 @@ private:
 	float timeAnimation;
 	glm::vec2 texCoordDispl;
 	vector<AnimKeyframes> animations;
+	
 
 };
 
