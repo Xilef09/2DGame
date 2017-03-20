@@ -113,7 +113,7 @@ void Player::update(int deltaTime)
 	else
 	{
 		posPlayer.y += FALL_STEP;
-		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y))
+		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
 		{
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
