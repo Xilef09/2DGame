@@ -109,8 +109,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
-	sprite->update(deltaTime);
-	bool acabada = sprite->animacionAcabada;
+	
+	bool acabada = sprite->update(deltaTime);
 
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
@@ -123,16 +123,11 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(STAND_LEFT);
 		}
 		else{
-			posPlayer.x -= 2;
+			if (sprite->animation() == MOVE_RIGHT) posPlayer.x += 1;
+			else posPlayer.x -= 1;
 		}
 		
 		/*
-		if (acabada) {
-			if (sprite->animation() != MOVE_LEFT)
-				sprite->changeAnimation(MOVE_LEFT);
-		}
-		if (sprite->animation() == CHANGE_DIRECTION_LEFT)  posPlayer.x += 1;
-		else posPlayer.x -= 2;
 		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
 		{
 			posPlayer.x += 2;
@@ -151,15 +146,11 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
 		else{
-			posPlayer.x += 2;
+			if (sprite->animation() == MOVE_LEFT) posPlayer.x -= 1;
+			else posPlayer.x += 1;
 		}
 		
 		/*
-		if (acabada) {
-			if (sprite->animation() != MOVE_RIGHT)
-				sprite->changeAnimation(MOVE_RIGHT);			
-		}
-		posPlayer.x += 2;
 		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 64)))
 		{
 			posPlayer.x -= 2;
@@ -175,54 +166,7 @@ void Player::update(int deltaTime)
 			else if (sprite->animation() == MOVE_RIGHT)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
-		/*
-		if (acabada) {
-			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && sprite->animation() == MOVE_LEFT) {
-				sprite->changeAnimation(CHANGE_DIRECTION_RIGHT);
-				direccion = "RIGHT";
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && sprite->animation() == STAND_LEFT) {
-				sprite->changeAnimation(CHANGE_DIRECTION_RIGHT);
-				direccion = "RIGHT";
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && sprite->animation() == MOVE_RIGHT) {
-				sprite->changeAnimation(CHANGE_DIRECTION_LEFT);
-				direccion = "LEFT";
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && sprite->animation() == STAND_RIGHT) {
-				sprite->changeAnimation(CHANGE_DIRECTION_LEFT);
-				direccion = "LEFT";
-			}
-			else if (sprite->animation() == MOVE_LEFT) {
-				sprite->changeAnimation(STAND_LEFT);
-			}
-			else if (sprite->animation() == MOVE_RIGHT) {
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-			else if (sprite->animation() == CHANGE_DIRECTION_LEFT) {
-				sprite->changeAnimation(STAND_LEFT);
-			}
-			else if (sprite->animation() == CHANGE_DIRECTION_RIGHT) {
-				sprite->changeAnimation(STAND_RIGHT);
-			}
-		}
-		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 64)))
-		{
-			posPlayer.x -= 2;
-			sprite->changeAnimation(STAND_RIGHT);
-		}
-		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
-		{
-			posPlayer.x += 2;
-			sprite->changeAnimation(STAND_LEFT);
-		}
-
-		if (sprite->animation() == STAND_RIGHT) direccion = "RIGHT";
-		else if (sprite->animation() == STAND_LEFT) direccion = "LEFT";
-		else if (sprite->animation() == CHANGE_DIRECTION_LEFT) posPlayer.x -= 2;
-		else if (sprite->animation() == CHANGE_DIRECTION_RIGHT) posPlayer.x += 2;
 		
-		*/
 	}	
 	if(bJumping)
 	{

@@ -35,9 +35,9 @@ Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Te
 	
 }
 
-void Sprite::update(int deltaTime)
+bool Sprite::update(int deltaTime)
 {
-	animacionAcabada = false;
+	bool animacionAcabada = false;
 	if(currentAnimation >= 0)
 	{
 		timeAnimation += deltaTime;
@@ -49,6 +49,7 @@ void Sprite::update(int deltaTime)
 		}
 		texCoordDispl = animations[currentAnimation].keyframeDispl[currentKeyframe];
 	}
+	return animacionAcabada;
 }
 
 void Sprite::render() const
