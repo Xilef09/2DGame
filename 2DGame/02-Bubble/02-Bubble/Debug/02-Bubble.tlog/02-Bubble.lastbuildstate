@@ -1,6 +1,2 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v120:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
-<<<<<<< HEAD
-Debug|Win32|C:\Users\SinNombre\Desktop\VJ\2DGame\2DGame\02-Bubble\|
-=======
-Debug|Win32|C:\Users\aleue\Documents\GitHub\2DGame\2DGame\02-Bubble\|
->>>>>>> 6fd2ef0529f41770e2160251946a75d268a5b08d
+Debug|Win32|F:\windows\VJ\2DGame\2DGame\02-Bubble\|
