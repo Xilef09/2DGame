@@ -28,6 +28,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	string direccion;
 
 };
 
