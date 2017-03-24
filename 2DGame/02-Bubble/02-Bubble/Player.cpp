@@ -136,12 +136,41 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		tileMapDispl = tileMapPos;
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));	
 }
-
+ 
 void Player::update(int deltaTime)
 {
 	
 	bool acabada = sprite->update(deltaTime);
+	if (acabada) {
+		switch (sprite->animation())
+		{
+		case STAND_LEFT:
+			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_LEFT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(START_MOVING_LEFT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_LEFT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(STAND_RIGHT);
+			break;
+		case STAND_RIGHT:
+			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RIGHT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(START_MOVING_RIGHT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_RIGHT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(STAND_LEFT);
+			break;
+		default:
+			sprite->changeAnimation(STAND_LEFT);
+			break;
+		}
+	}
+	else {
+		if (sprite->animation() == JUMP_LEFT) posPlayer.x -= 1;
+		else if (sprite->animation() == START_MOVING_LEFT) posPlayer.x -= 1;
+		else if (sprite->animation() == JUMP_RIGHT) posPlayer.x += 1;
+		else if (sprite->animation() == START_MOVING_RIGHT) posPlayer.x += 1;
+		
 
+		
+	}
+	/*
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		if (acabada) {
@@ -172,13 +201,12 @@ void Player::update(int deltaTime)
 			else if (sprite->animation() != STAND_LEFT && sprite->animation() != STAND_RIGHT) posPlayer.x -= 1;
 		}
 		
-		/*
+		
 		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
 		{
-			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-		*/
+		
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
@@ -210,13 +238,12 @@ void Player::update(int deltaTime)
 			else if (sprite->animation() != STAND_LEFT && sprite->animation() != STAND_RIGHT) posPlayer.x += 1;
 		}
 		
-		/*
+		
 		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 64)))
 		{
-			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
-		*/
+		
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)){
 		
@@ -287,9 +314,21 @@ void Player::update(int deltaTime)
 			//else if (sprite->animation() == CHANGE_DIRECTION_LEFT) posPlayer.x -= 0.2;
 			//else if (sprite->animation() == CHANGE_DIRECTION_RIGHT) posPlayer.x += 0.2;
 
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
+			{
+				//posPlayer.x += 2;
+				sprite->changeAnimation(STAND_LEFT);
+			}
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 64)))
+			{
+				//posPlayer.x -= 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
 		}
 		
 	}	
+	*/
+
 	if(bJumping)
 	{		
 		jumpAngle += JUMP_ANGLE_STEP;
@@ -311,12 +350,12 @@ void Player::update(int deltaTime)
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
 
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			/*if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
 				bJumping = true;
 				jumpAngle = 0;
 				startY = posPlayer.y;
-			}
+			}*/
 		}
 	}
 	
