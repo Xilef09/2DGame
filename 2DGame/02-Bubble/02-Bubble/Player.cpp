@@ -243,6 +243,9 @@ void Player::update(int deltaTime)
 		else {
 			if (sprite->animation() == JUMP_RIGHT) posPlayer.x += 1;
 		}
+		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 64))){
+			sprite->changeAnimation(JUMP_RUN_RIGHT);
+		}
 		//mirar collisions
 	}
 	else
@@ -275,6 +278,9 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(STAND_LEFT);
 				break;
 			case JUMP_RIGHT:
+				sprite->changeAnimation(STAND_RIGHT);
+				break;
+			case JUMP_RUN_RIGHT:
 				sprite->changeAnimation(STAND_RIGHT);
 				break;
 			default:
