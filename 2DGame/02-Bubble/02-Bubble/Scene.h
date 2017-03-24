@@ -31,7 +31,9 @@ private:
 	Player *player;
 	ShaderProgram texProgram;
 	float currentTime;
+	float camaraY = 128.f, camaraX = 0.f;
 	glm::mat4 projection;
+	bool camaraMoguda = false;
 
 };
 

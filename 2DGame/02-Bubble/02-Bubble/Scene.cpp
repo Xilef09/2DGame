@@ -8,8 +8,8 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 10	
-#define INIT_PLAYER_Y_TILES 12
+#define INIT_PLAYER_X_TILES 5	
+#define INIT_PLAYER_Y_TILES 5
 
 
 Scene::Scene()
@@ -35,7 +35,7 @@ void Scene::init()
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
 	currentTime = 0.0f;
 }
 
@@ -43,6 +43,25 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+
+	glm::ivec2 posicioActual = player->posPlayer;
+	if (((posicioActual[0] + 32) % 320) == 0 && camaraMoguda==false){
+		if ((SCREEN_WIDTH + camaraX) <= (posicioActual[0] + 32))
+			camaraX = camaraX + 320;
+		else
+			camaraX = camaraX - 320;
+		camaraMoguda = true;
+	}
+	else if (((posicioActual[1] + 120) % 192) == 0 && camaraMoguda == false){
+		if ((SCREEN_HEIGHT + camaraY) <= (posicioActual[1] + 120)){
+			camaraY = camaraY + 192;
+		}
+		else
+			camaraY = camaraY - 192;
+		camaraMoguda = true;
+	}
+	else camaraMoguda = false;
+	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 }
 
 void Scene::render()
