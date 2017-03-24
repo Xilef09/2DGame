@@ -189,7 +189,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	int x0, x1, y;
 	
 	x0 = pos.x / tileSizeX;
-	x1 = (pos.x + size.x - 1) / tileSizeY;
+	x1 = (pos.x + size.x - 1) / tileSizeX;
 	y = (pos.y + size.y - 1) / tileSizeY;
 	for(int x=x0; x<=x1; x++)
 	{
