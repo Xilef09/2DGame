@@ -200,8 +200,12 @@ void Player::update(int deltaTime)
 			//else if (sprite->animation() == CHANGE_DIRECTION_LEFT) posPlayer.x -= 0.0;
 			else if (sprite->animation() != STAND_LEFT && sprite->animation() != STAND_RIGHT) posPlayer.x -= 1;
 		}
+	
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 43e425e5f3584124db2657e8e568e3358c614d14
 		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
 		{
 			sprite->changeAnimation(STAND_LEFT);
@@ -270,6 +274,9 @@ void Player::update(int deltaTime)
 		else {
 			if (sprite->animation() == JUMP_RIGHT) posPlayer.x += 1;
 		}
+		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 64))){
+			sprite->changeAnimation(JUMP_RUN_RIGHT);
+		}
 		//mirar collisions
 	}
 	else
@@ -304,7 +311,14 @@ void Player::update(int deltaTime)
 			case JUMP_RIGHT:
 				sprite->changeAnimation(STAND_RIGHT);
 				break;
+<<<<<<< HEAD
 			default:
+=======
+			case JUMP_RUN_RIGHT:
+				sprite->changeAnimation(STAND_RIGHT);
+				break;
+			default:
+>>>>>>> 43e425e5f3584124db2657e8e568e3358c614d14
 				break;
 			}
 		}
@@ -313,6 +327,7 @@ void Player::update(int deltaTime)
 			else if (sprite->animation() == MOVE_LEFT || sprite->animation() == START_MOVING_LEFT) posPlayer.x -= 1;
 			//else if (sprite->animation() == CHANGE_DIRECTION_LEFT) posPlayer.x -= 0.2;
 			//else if (sprite->animation() == CHANGE_DIRECTION_RIGHT) posPlayer.x += 0.2;
+<<<<<<< HEAD
 
 			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
 			{
@@ -324,6 +339,18 @@ void Player::update(int deltaTime)
 				//posPlayer.x -= 2;
 				sprite->changeAnimation(STAND_RIGHT);
 			}
+=======
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 64)))
+			{
+				posPlayer.x -= 2;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64)))
+			{
+				posPlayer.x += 2;
+				sprite->changeAnimation(STAND_LEFT);
+			}
+>>>>>>> 43e425e5f3584124db2657e8e568e3358c614d14
 		}
 		
 	}	
