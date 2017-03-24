@@ -26,13 +26,6 @@ public:
 	void render() const;
 	void free();
 	
-	/*pair<int, int> getTileSize() const { 
-		pair<int, int> tileSize;
-		tileSize.first = tileSizeX;
-		tileSize.second = tileSizeY;
-		return tileSize; 
-	}
-	*/
 	int getTileSize() const { return tileSizeX; }
 
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const;
