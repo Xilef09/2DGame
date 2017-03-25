@@ -240,6 +240,7 @@ void Player::update(int deltaTime)
 		else sprite->changeAnimation(STAND_RIGHT);
 	}
 	*/
+
 	
 	if (sprite->animation() == JUMP_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
 	else if (sprite->animation() == START_MOVING_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
