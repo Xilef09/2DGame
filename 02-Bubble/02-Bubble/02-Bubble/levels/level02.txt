@@ -1,7 +1,7 @@
 TILEMAP
 104 15
 32 64 32 64
-images/level2tiles_v2.png
+images/level2tiles.png
 10 5
 39
 1
