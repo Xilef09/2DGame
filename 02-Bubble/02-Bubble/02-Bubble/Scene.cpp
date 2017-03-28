@@ -42,7 +42,7 @@ void Scene::init()
 	
 	enemy=new Enemy();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES+2)* map->getTileSize(), (INIT_PLAYER_Y_TILES-1) * map->getTileSize()));
 	enemy->setTileMap(map);
 
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
@@ -53,6 +53,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	enemy->update(deltaTime);
 
 	glm::ivec2 posicioActual = player->posPlayer;
 	if (((posicioActual[0] + 32) % 320) == 0 && camaraMoguda==false){
