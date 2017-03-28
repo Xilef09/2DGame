@@ -154,7 +154,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 
-	int x, y0, y1;
+	/*int x, y0, y1;
 
 	x = (pos.x / tileSizeX) - 1;
 	y0 = pos.y / tileSizeY;
@@ -162,7 +162,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 	//for (int y = y0; y <= y1; y++){
 		if (map[(y0-1)*mapSize.x + x] != 1)
 			return true;
-	//}
+	//}*/
 	return false;
 }
 

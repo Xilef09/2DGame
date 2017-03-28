@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Enemy.h"
 
 
 // Scene contains all the entities of our game.
@@ -30,6 +31,7 @@ private:
 	TileMap *map;
 	TileMap *mapColumns;
 	Player *player;
+	Enemy *enemy;
 	ShaderProgram texProgram;
 	float currentTime;
 	float camaraY = 128.f, camaraX = 0.f;
