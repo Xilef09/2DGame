@@ -176,11 +176,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	//for (int y = y0; y <= y1; y++){
 		if (map[(y0 + 1)*mapSize.x + x+2] == 3 || map[(y0+ 1)*mapSize.x + x+2] == 2 || map[(y0 + 1)*mapSize.x + x+2] == 16)
 			return true;
-<<<<<<< HEAD
-	}
-=======
 	//}	
->>>>>>> 43e425e5f3584124db2657e8e568e3358c614d14
 	return false;
 	
 }
