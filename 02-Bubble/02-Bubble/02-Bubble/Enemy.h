@@ -1,7 +1,7 @@
 #ifndef _ENEMY_INCLUDE
 #define _ENEMY_INCLUDE
 
-
+#include <stdlib.h> 
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Player.h"
