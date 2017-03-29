@@ -7,8 +7,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Spikes.h"
-
+#include "Spike.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -25,22 +24,28 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	bool initTraps(const string &file);
+
+	
+
 private:
 	void initShaders(); 
 
 private:
 	TileMap *map;
 	TileMap *mapColumns;
-	TileMap *mapTraps;
 	Player *player;
+	Spike *spike;
 	Enemy *enemy;
 	ShaderProgram texProgram;
 	float currentTime; 
 	float camaraY = 128.f, camaraX = 0.f;
 	glm::mat4 projection;
 	bool camaraMoguda = false;
+	
+	vector<Spike *> spikes;
 
-	Spikes *traps = new Spikes[18];
+	
 };
 
 

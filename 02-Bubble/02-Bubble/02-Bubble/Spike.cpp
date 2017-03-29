@@ -1,4 +1,7 @@
-#include "Spikes.h"
+#include <iostream>
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include "Spike.h"
 #include "Game.h"
 
 enum PlayerAnims
@@ -6,8 +9,9 @@ enum PlayerAnims
 	NOTHING, ALMOST_NOTHING, HALF_VISIBLE, FULL_VISIBLE
 };
 
-void Spikes::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player)
+void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player)
 {
+	
 	spritesheet.loadFromFile("images/Traps.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -26,41 +30,43 @@ void Spikes::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Pl
 
 	this->player = player;
 
-	sprite->changeAnimation(NOTHING);
+	sprite->changeAnimation(FULL_VISIBLE);
 	tileMapDispl = tileMapPos;
 	//investigar com agafar trap position
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + trapPosition.x), float(tileMapDispl.y + trapPosition.y)));
+	
 
 }
 
 
-void Spikes::update(int deltaTime)
+void Spike::update(int deltaTime)
 {
+	/*
 	bool acabada = sprite->update(deltaTime);
 
 	if (acabada) {
-		switch (sprite->animation())
-		{
-		case NOTHING:
-			sprite->changeAnimation(ALMOST_NOTHING);
-			break;
-		case ALMOST_NOTHING:
-			sprite->changeAnimation(HALF_VISIBLE);
-			break;
-		case HALF_VISIBLE:
-			sprite->changeAnimation(FULL_VISIBLE);
-			break;
-		case FULL_VISIBLE:
-			sprite->changeAnimation(NOTHING);
-			break;
-		}
+	switch (sprite->animation())
+	{
+	case NOTHING:
+	sprite->changeAnimation(ALMOST_NOTHING);
+	break;
+	case ALMOST_NOTHING:
+	sprite->changeAnimation(HALF_VISIBLE);
+	break;
+	case HALF_VISIBLE:
+	sprite->changeAnimation(FULL_VISIBLE);
+	break;
+	case FULL_VISIBLE:
+	sprite->changeAnimation(NOTHING);
+	break;
 	}
-
+	}
+	*/
 	//mirar collisions amb el player, encara no se com fer-ho.
 }
 
-void Spikes::render() {
-	sprite->render();
+void Spike::render() {
+	//sprite->render();
 }
 
 

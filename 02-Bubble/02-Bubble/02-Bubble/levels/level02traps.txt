@@ -1,9 +1,6 @@
 TILEMAP
 104 15
-32 04 32 04
 images/Traps.png
-10 5
-30
 0
 0
 0

@@ -4,23 +4,23 @@
 #include <string>
 #include <vector>
 #include "TileMap.h"
-#include "Spikes.h"
+#include "Scene.h"
 
 
 using namespace std;
 
 
-TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, Spikes &traps)
+TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
-	TileMap *map = new TileMap(levelFile, minCoords, program, traps);
+	TileMap *map = new TileMap(levelFile, minCoords, program);
 	
 	return map;
 }
 
 
-TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, Spikes &traps)
+TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
-	loadLevel(levelFile, traps);
+	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
 }
 
@@ -47,7 +47,7 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-bool TileMap::loadLevel(const string &levelFile, Spikes &traps)
+bool TileMap::loadLevel(const string &levelFile)
 {
 	ifstream fin;
 	string line, tilesheetFile;
@@ -87,13 +87,15 @@ bool TileMap::loadLevel(const string &levelFile, Spikes &traps)
 			getline(fin,line);
 			string tile;
 			tile = line;
+			/*
 			if (stoi(tile) == 18 || stoi(tile) == 24 || stoi(tile) == 52 ) {
 				//trampa 1 pinchos
-				traps[trapsCount] = 
+				
 			}
 			else if (stoi(tile) == 8) {
 				//puerta de pichos
 			}
+			*/
 			//fin.get(tile);
 			/*if(tile.compare('0'))
 				map[j*mapSize.x+i] = 0;
