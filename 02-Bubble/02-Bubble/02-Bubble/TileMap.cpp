@@ -4,22 +4,23 @@
 #include <string>
 #include <vector>
 #include "TileMap.h"
+#include "Spikes.h"
 
 
 using namespace std;
 
 
-TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
+TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, Spikes &traps)
 {
-	TileMap *map = new TileMap(levelFile, minCoords, program);
+	TileMap *map = new TileMap(levelFile, minCoords, program, traps);
 	
 	return map;
 }
 
 
-TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
+TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, Spikes &traps)
 {
-	loadLevel(levelFile);
+	loadLevel(levelFile, traps);
 	prepareArrays(minCoords, program);
 }
 
@@ -46,7 +47,7 @@ void TileMap::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-bool TileMap::loadLevel(const string &levelFile)
+bool TileMap::loadLevel(const string &levelFile, Spikes &traps)
 {
 	ifstream fin;
 	string line, tilesheetFile;
@@ -77,6 +78,8 @@ bool TileMap::loadLevel(const string &levelFile)
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 	
 	map = new int[mapSize.x * mapSize.y];
+
+	int trapsCount = 0;
 	for(int j=0; j<mapSize.y; j++)
 	{
 		for(int i=0; i<mapSize.x; i++)
@@ -84,6 +87,13 @@ bool TileMap::loadLevel(const string &levelFile)
 			getline(fin,line);
 			string tile;
 			tile = line;
+			if (stoi(tile) == 18 || stoi(tile) == 24 || stoi(tile) == 52 ) {
+				//trampa 1 pinchos
+				traps[trapsCount] = 
+			}
+			else if (stoi(tile) == 8) {
+				//puerta de pichos
+			}
 			//fin.get(tile);
 			/*if(tile.compare('0'))
 				map[j*mapSize.x+i] = 0;
@@ -154,7 +164,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 
-	int x, y0, y1;
+	/*int x, y0, y1;
 
 	x = (pos.x / tileSizeX) - 1;
 	y0 = pos.y / tileSizeY;
@@ -162,7 +172,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 	//for (int y = y0; y <= y1; y++){
 		if (map[(y0-1)*mapSize.x + x] != 1)
 			return true;
-	//}
+	//}*/
 	return false;
 }
 
