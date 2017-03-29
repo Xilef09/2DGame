@@ -4,12 +4,13 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Player.h"
 class Enemy
 {
 public:
 
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
-	void update(int deltaTime);
+	void update(int deltaTime, Player player);
 	void render();
 
 	void setTileMap(TileMap *tileMap);
