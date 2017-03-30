@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Spike.h"
+#include "SpikeDoor.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -36,6 +37,7 @@ private:
 	TileMap *mapColumns;
 	Player *player;
 	Spike *spike;
+	SpikeDoor *spikeDoor;
 	Enemy *enemy;
 	ShaderProgram texProgram;
 	float currentTime; 
@@ -44,6 +46,7 @@ private:
 	bool camaraMoguda = false;
 	
 	vector<Spike *> spikes;
+	vector<SpikeDoor *> spikeDoors;
 
 	
 };

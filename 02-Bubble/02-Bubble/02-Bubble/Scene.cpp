@@ -13,7 +13,7 @@
 #define SCREEN_Y 0
 
 #define INIT_PLAYER_X_TILES 5	
-#define INIT_PLAYER_Y_TILES 5
+#define INIT_PLAYER_Y_TILES 3
 
 
 Scene::Scene()
@@ -43,7 +43,7 @@ void Scene::init()
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 	player->setTileMap(map);
 
 	bool result = initTraps("levels/level02traps.txt");
@@ -62,6 +62,14 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	enemy->update(deltaTime,player[0]);
+
+	for each (Spike *spike in spikes) {
+		spike->update(deltaTime);
+	}
+
+	for each (SpikeDoor *spikeDoor in spikeDoors) {
+		spikeDoor->update(deltaTime);
+	}
 
 	//spikes->update(deltaTime);
 
@@ -98,21 +106,20 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 
-	/*
-	//Traps
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	mapTraps->render();
-	*/
+	
 
 	//Prince
 	player->render();
 
 	enemy->render();
+
+	for each (Spike *spike in spikes) {
+		spike->render();
+	}
+
+	for each (SpikeDoor *spikeDoor in spikeDoors) {
+		spikeDoor->render();
+	}
 
 	//Columnes
 	texProgram.use();
@@ -199,15 +206,15 @@ bool Scene::initTraps(const string &file) {
 			if (stoi(tile) == 1) 
 			{ //spike
 				spike = new Spike();
-				spike->init(glm::ivec2(i*map->getTileSizeX(), j*map->getTileSizeY()), texProgram, player);
+				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram, player);
 				spikes.push_back(spike);
 			}
-			else if (stoi(tile) == 1)
+			else if (stoi(tile) == 2)
 			{
 				//porta
-				//spikeDoor = new SpikeDoor();
-				//spikeDoor->init(glm::ivec2(i*map->getTileSizeX(), j*map->getTileSizeY()), texProgram, player);
-				//spikesDoor.push_back(spike);
+				spikeDoor = new SpikeDoor();
+				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-67.0f), texProgram, player);
+				spikeDoors.push_back(spikeDoor);
 			}
 			/*
 			if (stoi(tile) == 18 || stoi(tile) == 24 || stoi(tile) == 52 ) {
