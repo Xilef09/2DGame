@@ -21,8 +21,12 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
 	sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
+	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(MOVE_LEFT, 8);
@@ -107,13 +111,38 @@ void Enemy::update(int deltaTime, Player player)
 	if (acabada){
 		switch (sprite->animation()){
 			case STAND_RIGHT:
-				if ((posEnemy[0]-player.posPlayer[0])<10 && posEnemy[1]==player.posPlayer[1]) sprite->changeAnimation(MOVE_RIGHT);
+				if ((posEnemy[0] - player.posPlayer[0])<3 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_RIGHT);
+				else if ((posEnemy[0] - player.posPlayer[0]) < 10 && posEnemy[1] == player.posPlayer[1]){
+					int mov = rand() % 5;
+					if (mov%5<2)sprite->changeAnimation(MOVE_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
 				else sprite->changeAnimation(STAND_RIGHT);
+				break;
+			case STAND_LEFT:
+				if ((player.posPlayer[0]-posEnemy[0])<10 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(MOVE_LEFT);
+				else if ((player.posPlayer[0]-posEnemy[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_LEFT);
+				else sprite->changeAnimation(STAND_LEFT);
+				break;
+			case MOVE_RIGHT:
+				if ((posEnemy[0] - player.posPlayer[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_RIGHT);
+				else if ((posEnemy[0] - player.posPlayer[0]) < 10 && posEnemy[1] == player.posPlayer[1]){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else sprite->changeAnimation(STAND_RIGHT);
+				break;
+			case MOVE_LEFT:
+				if ((player.posPlayer[0] - posEnemy[0])<10 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(MOVE_LEFT);
+				else if ((player.posPlayer[0] - posEnemy[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_LEFT);
+				else sprite->changeAnimation(STAND_LEFT);
 				break;
 		}
 	}
 
 	if (sprite->animation() == MOVE_RIGHT) posEnemy.x += 1;
+	if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
 	//MODIFICAR POSICIONS
 
 
