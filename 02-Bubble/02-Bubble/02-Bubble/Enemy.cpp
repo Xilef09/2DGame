@@ -111,22 +111,36 @@ void Enemy::update(int deltaTime, Player player)
 	if (acabada){
 		switch (sprite->animation()){
 			case STAND_RIGHT:
-				if ((posEnemy[0] - player.posPlayer[0])<3 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_RIGHT);
-				else if ((posEnemy[0] - player.posPlayer[0]) < 10 && posEnemy[1] == player.posPlayer[1]){
+				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){
 					int mov = rand() % 5;
-					if (mov%5<2)sprite->changeAnimation(MOVE_RIGHT);
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if ((player.posPlayer.x - posEnemy.x) < 256 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy.y == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
 					else sprite->changeAnimation(STAND_RIGHT);
 				}
 				else sprite->changeAnimation(STAND_RIGHT);
 				break;
 			case STAND_LEFT:
-				if ((player.posPlayer[0]-posEnemy[0])<10 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(MOVE_LEFT);
-				else if ((player.posPlayer[0]-posEnemy[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_LEFT);
-				else sprite->changeAnimation(STAND_LEFT);
-				break;
+				if ((posEnemy.x - player.posPlayer.x) < 34 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if ((posEnemy.x - player.posPlayer.x) < 256 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy.y == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
 			case MOVE_RIGHT:
-				if ((posEnemy[0] - player.posPlayer[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_RIGHT);
-				else if ((posEnemy[0] - player.posPlayer[0]) < 10 && posEnemy[1] == player.posPlayer[1]){
+				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if ((player.posPlayer.x - posEnemy.x) < 256 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy.y == player.posPlayer.y){
 					int mov = rand() % 5;
 					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
 					else sprite->changeAnimation(STAND_RIGHT);
@@ -134,8 +148,42 @@ void Enemy::update(int deltaTime, Player player)
 				else sprite->changeAnimation(STAND_RIGHT);
 				break;
 			case MOVE_LEFT:
-				if ((player.posPlayer[0] - posEnemy[0])<10 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(MOVE_LEFT);
-				else if ((player.posPlayer[0] - posEnemy[0])<2 && posEnemy[1] == player.posPlayer[1]) sprite->changeAnimation(ATTACK_LEFT);
+				if ((posEnemy.x - player.posPlayer.x) < 34 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if ((posEnemy.x - player.posPlayer.x) < 256 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy.y == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else sprite->changeAnimation(STAND_RIGHT);
+				break;
+			case ATTACK_RIGHT:
+				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if ((player.posPlayer.x - posEnemy.x) < 256 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy.y == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
+					else sprite->changeAnimation(STAND_RIGHT);
+				}
+				else sprite->changeAnimation(STAND_RIGHT);
+				break;
+			case ATTACK_LEFT:
+				if ((posEnemy.x - player.posPlayer.x) < 34 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
+				}
+				else if ((posEnemy.x - player.posPlayer.x) < 256 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy.y == player.posPlayer.y){
+					int mov = rand() % 5;
+					if (mov % 5<2)sprite->changeAnimation(MOVE_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
+				}
 				else sprite->changeAnimation(STAND_LEFT);
 				break;
 		}
