@@ -9,7 +9,7 @@ class Enemy
 {
 public:
 
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, string enemyType, string direction);
 	void update(int deltaTime, Player player);
 	void render();
 

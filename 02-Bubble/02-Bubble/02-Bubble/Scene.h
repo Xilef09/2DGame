@@ -25,6 +25,7 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	bool initEnemies(string levelFile);
 	bool initTraps(const string &file);
 
 	
@@ -47,6 +48,8 @@ private:
 	
 	vector<Spike *> spikes;
 	vector<SpikeDoor *> spikeDoors;
+
+	vector<Enemy *> enemies;
 
 	
 };

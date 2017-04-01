@@ -10,12 +10,12 @@ enum EnemyAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, ATTACK_LEFT, ATTACK_RIGHT, DEAD_LEFT, DEAD_RIGHT
 };
 
-void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, string enemyType, string direction)
 {
 	direccion = "";
 	bJumping = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
-	spritesheet.loadFromFile("images/soldier.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/"+enemyType+".png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(18);
 
@@ -100,7 +100,10 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(DEAD_RIGHT, glm::vec2(0.7f, 0.75f));
 	sprite->addKeyframe(DEAD_RIGHT, glm::vec2(0.8f, 0.75f));
 
-	sprite->changeAnimation(STAND_RIGHT);
+	if (direction.compare(0, 5, "right") == 0)
+		sprite->changeAnimation(STAND_RIGHT);
+	else
+		sprite->changeAnimation(STAND_LEFT);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
@@ -126,14 +129,16 @@ void Enemy::update(int deltaTime, Player player)
 			case STAND_LEFT:
 				if ((posEnemy.x - player.posPlayer.x) < 34 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y){
 					int mov = rand() % 5;
-					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
-					else sprite->changeAnimation(STAND_RIGHT);
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
 				}
 				else if ((posEnemy.x - player.posPlayer.x) < 256 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy.y == player.posPlayer.y){
 					int mov = rand() % 5;
-					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
-					else sprite->changeAnimation(STAND_RIGHT);
+					if (mov % 5<2)sprite->changeAnimation(MOVE_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
 				}
+				else sprite->changeAnimation(STAND_LEFT);
+				break;
 			case MOVE_RIGHT:
 				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){
 					int mov = rand() % 5;
@@ -150,15 +155,15 @@ void Enemy::update(int deltaTime, Player player)
 			case MOVE_LEFT:
 				if ((posEnemy.x - player.posPlayer.x) < 34 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y){
 					int mov = rand() % 5;
-					if (mov % 5<3)sprite->changeAnimation(ATTACK_RIGHT);
-					else sprite->changeAnimation(STAND_RIGHT);
+					if (mov % 5<3)sprite->changeAnimation(ATTACK_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
 				}
 				else if ((posEnemy.x - player.posPlayer.x) < 256 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy.y == player.posPlayer.y){
 					int mov = rand() % 5;
-					if (mov % 5<2)sprite->changeAnimation(MOVE_RIGHT);
-					else sprite->changeAnimation(STAND_RIGHT);
+					if (mov % 5<2)sprite->changeAnimation(MOVE_LEFT);
+					else sprite->changeAnimation(STAND_LEFT);
 				}
-				else sprite->changeAnimation(STAND_RIGHT);
+				else sprite->changeAnimation(STAND_LEFT);
 				break;
 			case ATTACK_RIGHT:
 				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){

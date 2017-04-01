@@ -47,11 +47,13 @@ void Scene::init()
 	player->setTileMap(map);
 
 	bool result = initTraps("levels/level02traps.txt");
-	
-	enemy=new Enemy();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES+3) * map->getTileSize()));
-	enemy->setTileMap(map);
+
+	initEnemies("levels/level02enemies.txt");
+
+	/*enemy=new Enemy();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,"sargent");
+	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSizeY()));
+	enemy->setTileMap(map);*/
 
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
 	currentTime = 0.0f;
@@ -61,7 +63,11 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	enemy->update(deltaTime,player[0]);
+	//enemy->update(deltaTime,player[0]);
+
+	for each (Enemy *enemy in enemies) {
+		enemy->update(deltaTime, player[0]);
+	}
 
 	for each (Spike *spike in spikes) {
 		spike->update(deltaTime);
@@ -106,12 +112,12 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 
-	
-
 	//Prince
 	player->render();
 
-	enemy->render();
+	for each (Enemy *enemy in enemies){
+		enemy->render();
+	}
 
 	for each (Spike *spike in spikes) {
 		spike->render();
@@ -159,6 +165,44 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+}
+
+bool Scene::initEnemies(string levelFile){
+	ifstream fin;
+	string line, tilesheetFile;
+	stringstream sstream, sstream1, sstream2, sstream3, sstream4;
+
+	int numEnemies;
+	//string tile;
+
+	fin.open(levelFile.c_str());
+	if (!fin.is_open())
+		return false;
+	getline(fin, line);
+	if (line.compare(0, 7, "ENEMIES") != 0)
+		return false;
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numEnemies;
+	for (int j = 0; j < numEnemies; j++)
+	{
+		string enemyType;
+		string direction;
+		string posX;
+		string posY;
+		getline(fin, enemyType);
+		getline(fin, direction);
+		getline(fin, posX);
+		getline(fin, posY);
+
+		enemy = new Enemy();
+		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, enemyType,direction);
+		enemy->setPosition(glm::vec2(stoi(posX)* map->getTileSize(), stoi(posY)* map->getTileSizeY()));
+		enemy->setTileMap(map);
+
+		enemies.push_back(enemy);
+
+	}
 }
 
 bool Scene::initTraps(const string &file) {
