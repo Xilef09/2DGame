@@ -15,7 +15,7 @@ enum PlayerAnims
 {
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_RIGHT, JUMP_LEFT, JUMP_RUN_RIGHT, JUMP_RUN_LEFT,
 	JUMP_STAND_LEFT, CHANGE_DIRECTION_LEFT, CHANGE_DIRECTION_RIGHT, JUMP_STAND_RIGHT, START_MOVING_RIGHT, 
-	START_MOVING_LEFT, CLIMB_RIGHT, CLIMB_LEFT, ATTACK_RIGHT, ATTACK_LEFT
+	START_MOVING_LEFT, CLIMB_RIGHT, CLIMB_LEFT, ATTACK_RIGHT, ATTACK_LEFT, SPIKE_DEATH_LEFT, SPIKE_DEATH_RIGHT
 };
 
 
@@ -27,7 +27,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/princeSpriteSheet2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(18);
+	sprite->setNumberAnimations(20);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
 		sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
@@ -41,6 +41,16 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.3f, 0.1f));
 		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.4f, 0.1f));
 
+		sprite->setAnimationSpeed(SPIKE_DEATH_LEFT, 8);
+		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.0f, 0.8f));
+		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.1f, 0.8f));
+		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.2f, 0.8f));
+
+		sprite->setAnimationSpeed(SPIKE_DEATH_RIGHT, 8);
+		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.0f, 0.8f));
+		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.1f, 0.8f));
+		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.2f, 0.8f));
+	
 		sprite->setAnimationSpeed(START_MOVING_RIGHT, 8);
 		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.1f, 0.1f));
 		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.2f, 0.1f));
@@ -289,7 +299,12 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 			
 			break;
-
+		case SPIKE_DEATH_RIGHT:
+			//restart level
+			break;
+		case SPIKE_DEATH_LEFT:
+			//restart leve:
+			break;
 		}
 	}
 	
@@ -378,6 +393,11 @@ void Player::setPosition(const glm::vec2 &pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void Player::isDead(bool isDead) {
+	if (isDead) {
+		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+	}
+}
 
 
 

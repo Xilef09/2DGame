@@ -49,14 +49,16 @@ void Scene::init()
 
 	bool result = initTraps("levels/level02traps.txt");
 
-	initEnemies("levels/level02enemies.txt");
+	initTraps("levels/level02torxes.txt");
 
-	
 
 	/*enemy=new Enemy();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,"sargent");
 	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSizeY()));
 	enemy->setTileMap(map);*/
+
+	initEnemies("levels/level02enemies.txt");
+
 
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
 	currentTime = 0.0f;
@@ -67,6 +69,11 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
+
+	for each (Fire *fire in fires) {
+		fire->update(deltaTime);
+	}
+
 	player->update(deltaTime);
 	//enemy->update(deltaTime,player[0]);
 
@@ -75,7 +82,7 @@ void Scene::update(int deltaTime)
 	}
 
 	for each (Spike *spike in spikes) {
-		spike->update(deltaTime, player[0]);
+		spike->update(deltaTime,player);
 	}
 
 	for each (SpikeDoor *spikeDoor in spikeDoors) {
@@ -116,6 +123,10 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
+
+	for each (Fire *fire in fires){
+		fire->render();
+	}
 
 	//Prince
 	player->render();
@@ -212,7 +223,7 @@ bool Scene::initEnemies(string levelFile){
 
 bool Scene::initTraps(const string &file) {
 	ifstream fin;
-	string line, tilesheetFile;
+	string line, tilesheetFile, fileFire;
 	stringstream sstream;
 	//string tile;
 	glm::ivec2 mapSize;
@@ -228,6 +239,8 @@ bool Scene::initTraps(const string &file) {
 	
 	sstream >> mapSize.x >> mapSize.y;
 	getline(fin, line);
+	fileFire = line;
+
 	/*
 	stringstream tile_size_sstream(line);
 	tile_size_sstream >> tileSizeX >> tileSizeY >> blockSizeX >> blockSizeY;
@@ -264,6 +277,13 @@ bool Scene::initTraps(const string &file) {
 				spikeDoor = new SpikeDoor();
 				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-67.0f), texProgram, player);
 				spikeDoors.push_back(spikeDoor);
+			}
+			else if (stoi(tile) == 3)
+			{
+				//porta
+				fire = new Fire();
+				fire->init(glm::ivec2(i*map->getTileSizeX(), j*(map->getTileSizeY()) - 64.0f), texProgram, fileFire);
+				fires.push_back(fire);
 			}
 			/*
 			if (stoi(tile) == 18 || stoi(tile) == 24 || stoi(tile) == 52 ) {
