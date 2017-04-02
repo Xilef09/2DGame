@@ -22,6 +22,8 @@ public:
 	void setPosition(const glm::vec2 &pos);
 
 	void isDead(bool dead);
+	void isDeadByDoor(bool dead);
+
 	glm::ivec2 posPlayer;
 	
 private:

@@ -83,7 +83,7 @@ void Scene::update(int deltaTime)
 
 		/*UPDATE SPIKEDOORS*/
 		for each (SpikeDoor *spikeDoor in spikeDoors) {
-			spikeDoor->update(deltaTime);
+			spikeDoor->update(deltaTime, player);
 		}
 
 		/*UPDATE CAMARA ORTOGONAL*/
@@ -367,7 +367,7 @@ bool Scene::initTraps(const string &file) {
 			{
 				//porta
 				spikeDoor = new SpikeDoor();
-				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-67.0f), texProgram, player);
+				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-64.0f), texProgram);
 				spikeDoors.push_back(spikeDoor);
 			}
 			else if (stoi(tile) == 3)

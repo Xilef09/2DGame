@@ -15,7 +15,8 @@ enum PlayerAnims
 {
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_RIGHT, JUMP_LEFT, JUMP_RUN_RIGHT, JUMP_RUN_LEFT,
 	JUMP_STAND_LEFT, CHANGE_DIRECTION_LEFT, CHANGE_DIRECTION_RIGHT, JUMP_STAND_RIGHT, START_MOVING_RIGHT, 
-	START_MOVING_LEFT, CLIMB_RIGHT, CLIMB_LEFT, ATTACK_RIGHT, ATTACK_LEFT, SPIKE_DEATH_LEFT, SPIKE_DEATH_RIGHT
+	START_MOVING_LEFT, CLIMB_RIGHT, CLIMB_LEFT, ATTACK_RIGHT, ATTACK_LEFT, SPIKE_DEATH_LEFT, SPIKE_DEATH_RIGHT,
+	SPIKE_DOOR_DEATH_RIGHT
 };
 
 
@@ -29,177 +30,182 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(20);
 	
-		sprite->setAnimationSpeed(STAND_LEFT, 8);
-		sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
+	sprite->setAnimationSpeed(STAND_LEFT, 8);
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
 		
-		sprite->setAnimationSpeed(STAND_RIGHT, 8);
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
+	sprite->setAnimationSpeed(STAND_RIGHT, 8);
+	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 
-		sprite->setAnimationSpeed(START_MOVING_LEFT, 8);
-		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.1f, 0.1f));
-		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.2f, 0.1f));
-		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.3f, 0.1f));
-		sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.4f, 0.1f));
+	sprite->setAnimationSpeed(START_MOVING_LEFT, 8);
+	sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.1f, 0.1f));
+	sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.2f, 0.1f));
+	sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.3f, 0.1f));
+	sprite->addKeyframe(START_MOVING_LEFT, glm::vec2(-0.4f, 0.1f));
 
-		sprite->setAnimationSpeed(SPIKE_DEATH_LEFT, 8);
-		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.0f, 0.8f));
-		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.1f, 0.8f));
-		sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.2f, 0.8f));
+	sprite->setAnimationSpeed(SPIKE_DEATH_LEFT, 8);
+	sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.0f, 0.8f));
+	sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.1f, 0.8f));
+	sprite->addKeyframe(SPIKE_DEATH_LEFT, glm::vec2(-0.2f, 0.8f));
 
-		sprite->setAnimationSpeed(SPIKE_DEATH_RIGHT, 8);
-		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.0f, 0.8f));
-		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.1f, 0.8f));
-		sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.2f, 0.8f));
+	sprite->setAnimationSpeed(SPIKE_DEATH_RIGHT, 8);
+	sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.0f, 0.8f));
+	sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.1f, 0.8f));
+	sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.2f, 0.8f));
+
+	sprite->setAnimationSpeed(SPIKE_DOOR_DEATH_RIGHT, 8);
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.7f, 0.8f));
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.8f, 0.8f));
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.9f, 0.8f));
 	
-		sprite->setAnimationSpeed(START_MOVING_RIGHT, 8);
-		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.1f, 0.1f));
-		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.2f, 0.1f));
-		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.3f, 0.1f));
-		sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.4f, 0.1f));
+	sprite->setAnimationSpeed(START_MOVING_RIGHT, 8);
+	sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.1f, 0.1f));
+	sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.2f, 0.1f));
+	sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.3f, 0.1f));
+	sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.4f, 0.1f));
 				
-		sprite->setAnimationSpeed(MOVE_LEFT, 8);
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.5f, 0.1f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.6f, 0.1f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.7f, 0.1f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.8f, 0.1f));
-		sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.9f, 0.1f));
+	sprite->setAnimationSpeed(MOVE_LEFT, 8);
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.5f, 0.1f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.6f, 0.1f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.7f, 0.1f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.8f, 0.1f));
+	sprite->addKeyframe(MOVE_LEFT, glm::vec2(-0.9f, 0.1f));
 		
-		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.5f, 0.1f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.6f, 0.1f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.7f, 0.1f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.8f, 0.1f));
-		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.9f, 0.1f));
+	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.5f, 0.1f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.6f, 0.1f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.7f, 0.1f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.8f, 0.1f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.9f, 0.1f));
 
-		sprite->setAnimationSpeed(JUMP_RIGHT, 8);
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.1f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.2f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.3f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.4f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.5f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.6f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.7f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.8f, 0.2f));
-		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.9f, 0.2f));
+	sprite->setAnimationSpeed(JUMP_RIGHT, 8);
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.1f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.2f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.3f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.4f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.5f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.6f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.7f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.8f, 0.2f));
+	sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.9f, 0.2f));
 
-		sprite->setAnimationSpeed(JUMP_LEFT, 8);
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.1f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.2f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.3f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.4f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.5f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.6f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.7f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.8f, 0.2f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.9f, 0.2f));
+	sprite->setAnimationSpeed(JUMP_LEFT, 8);
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.1f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.2f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.3f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.4f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.5f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.6f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.7f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.8f, 0.2f));
+	sprite->addKeyframe(JUMP_LEFT, glm::vec2(-0.9f, 0.2f));
 
-		sprite->setAnimationSpeed(JUMP_RUN_RIGHT, 8);
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.0f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.1f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.2f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.3f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.4f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.5f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.6f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.7f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.8f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.9f, 0.3f));
+	sprite->setAnimationSpeed(JUMP_RUN_RIGHT, 8);
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.0f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.1f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.2f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.3f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.4f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.5f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.6f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.7f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.8f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_RIGHT, glm::vec2(0.9f, 0.3f));
 
 
-		sprite->setAnimationSpeed(JUMP_RUN_LEFT, 8);
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.1f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.2f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.3f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.4f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.5f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.6f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.7f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.8f, 0.3f));
-		sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.9f, 0.3f));
+	sprite->setAnimationSpeed(JUMP_RUN_LEFT, 8);
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.1f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.2f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.3f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.4f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.5f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.6f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.7f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.8f, 0.3f));
+	sprite->addKeyframe(JUMP_RUN_LEFT, glm::vec2(-0.9f, 0.3f));
 
-		sprite->setAnimationSpeed(JUMP_STAND_RIGHT, 10);
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.1f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.2f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.3f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.4f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.5f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.6f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.7f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.8f, 0.5f));
-		
-
-		sprite->setAnimationSpeed(JUMP_STAND_LEFT, 10);
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.1f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.2f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.3f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.4f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.5f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.6f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.7f, 0.5f));
-		sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.8f, 0.5f));
+	sprite->setAnimationSpeed(JUMP_STAND_RIGHT, 10);
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.1f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.2f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.3f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.4f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.5f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.6f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.7f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_RIGHT, glm::vec2(0.8f, 0.5f));
 		
 
-		sprite->setAnimationSpeed(CHANGE_DIRECTION_LEFT, 8);
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.4f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.5f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.6f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.7f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.8f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.9f, 0.4f));
-
-		sprite->setAnimationSpeed(CHANGE_DIRECTION_RIGHT, 8);
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.4f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.5f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.6f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.7f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.8f, 0.4f));
-		sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.9f, 0.4f));
-
-		sprite->setAnimationSpeed(CLIMB_RIGHT, 8);
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.1f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.2f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.3f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.4f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.5f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.6f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.7f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.8f, 0.6f));
-		sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.9f, 0.6f));
-
-
-		sprite->setAnimationSpeed(CLIMB_LEFT, 8);
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.1f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.2f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.3f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.4f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.5f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.6f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.7f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.8f, 0.6f));
-		sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.9f, 0.6f));
-
-		sprite->setAnimationSpeed(ATTACK_RIGHT, 8);
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.1f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.2f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.3f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.4f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.5f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.6f, 0.7f));
-		sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.7f, 0.7f));
-
-		sprite->setAnimationSpeed(ATTACK_LEFT, 8);
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.1f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.2f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.3f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.4f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.5f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.6f, 0.7f));
-		sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.7f, 0.7f));
+	sprite->setAnimationSpeed(JUMP_STAND_LEFT, 10);
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.1f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.2f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.3f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.4f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.5f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.6f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.7f, 0.5f));
+	sprite->addKeyframe(JUMP_STAND_LEFT, glm::vec2(-0.8f, 0.5f));
 		
 
-		sprite->changeAnimation(0);
-		tileMapDispl = tileMapPos;
-		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));	
+	sprite->setAnimationSpeed(CHANGE_DIRECTION_LEFT, 8);
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.4f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.5f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.6f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.7f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.8f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_LEFT, glm::vec2(0.9f, 0.4f));
+
+	sprite->setAnimationSpeed(CHANGE_DIRECTION_RIGHT, 8);
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.4f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.5f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.6f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.7f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.8f, 0.4f));
+	sprite->addKeyframe(CHANGE_DIRECTION_RIGHT, glm::vec2(-0.9f, 0.4f));
+
+	sprite->setAnimationSpeed(CLIMB_RIGHT, 8);
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.1f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.2f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.3f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.4f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.5f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.6f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.7f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.8f, 0.6f));
+	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.9f, 0.6f));
+
+
+	sprite->setAnimationSpeed(CLIMB_LEFT, 8);
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.1f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.2f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.3f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.4f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.5f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.6f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.7f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.8f, 0.6f));
+	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.9f, 0.6f));
+
+	sprite->setAnimationSpeed(ATTACK_RIGHT, 8);
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.1f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.2f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.3f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.4f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.5f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.6f, 0.7f));
+	sprite->addKeyframe(ATTACK_RIGHT, glm::vec2(0.7f, 0.7f));
+
+	sprite->setAnimationSpeed(ATTACK_LEFT, 8);
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.1f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.2f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.3f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.4f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.5f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.6f, 0.7f));
+	sprite->addKeyframe(ATTACK_LEFT, glm::vec2(-0.7f, 0.7f));
+		
+
+	sprite->changeAnimation(0);
+	tileMapDispl = tileMapPos;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));	
 }
  
 void Player::update(int deltaTime)
@@ -305,6 +311,9 @@ void Player::update(int deltaTime)
 		case SPIKE_DEATH_LEFT:
 			//restart leve:
 			break;
+		case SPIKE_DOOR_DEATH_RIGHT:
+			//restart level
+			break;
 		}
 	}
 	
@@ -394,10 +403,17 @@ void Player::setPosition(const glm::vec2 &pos)
 }
 
 void Player::isDead(bool isDead) {
-	if (isDead) {
+	if (isDead) {		
 		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+		//sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
 	}
 }
 
+void Player::isDeadByDoor(bool isDead) {
+	if (isDead) {
+		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+		//sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
+	}
+}
 
 
