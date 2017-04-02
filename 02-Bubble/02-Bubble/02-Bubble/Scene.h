@@ -10,6 +10,7 @@
 #include "Spike.h"
 #include "SpikeDoor.h"
 #include "Fire.h"
+#include "Menu.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -42,9 +43,10 @@ private:
 	SpikeDoor *spikeDoor;
 	Enemy *enemy;
 	Fire *fire;
+	Menu *menu;
 	ShaderProgram texProgram;
 	float currentTime; 
-	float camaraY = 128.f, camaraX = 0.f;
+	float camaraY = 0.f, camaraX = 0.f; //camaraY = 128.f;
 	glm::mat4 projection;
 	bool camaraMoguda = false;
 	
@@ -53,7 +55,7 @@ private:
 	vector<Fire *> fires;
 	vector<Enemy *> enemies;
 
-	
+	int state;
 };
 
 

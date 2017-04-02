@@ -37,6 +37,10 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
+	/*MENU*/
+	menu = new Menu();
+	menu->init(texProgram);
+
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//mapTraps = TileMap::createTileMap("levels/level02traps.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -58,6 +62,9 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+
+	menu->update(deltaTime);
+
 	currentTime += deltaTime;
 
 	for each (Fire *fire in fires) {
@@ -112,7 +119,7 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
+	/*map->render();
 
 	for each (Fire *fire in fires){
 		fire->render();
@@ -140,7 +147,9 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	mapColumns->render();
+	mapColumns->render();*/
+
+	menu->render();
 }
 
 void Scene::initShaders()
