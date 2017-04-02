@@ -66,6 +66,10 @@ void Sprite::render() const
 	glDisable(GL_TEXTURE_2D);
 }
 
+void Sprite::changeSpitesheet(Texture *spritesheet){
+	texture = spritesheet;
+}
+
 void Sprite::free()
 {
 	glDeleteBuffers(1, &vbo);

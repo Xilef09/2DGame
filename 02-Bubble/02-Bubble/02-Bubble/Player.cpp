@@ -312,6 +312,7 @@ void Player::update(int deltaTime)
 			//restart leve:
 			break;
 		case SPIKE_DOOR_DEATH_RIGHT:
+			//restart level
 			break;
 		}
 	}
@@ -401,16 +402,18 @@ void Player::setPosition(const glm::vec2 &pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-void Player::isDead(bool isDead, string cause) {
-	if (isDead) {
-		if (cause == "spikeDoor") {
-			sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
-		}
-		else if (cause == "spike") {
-			sprite->changeAnimation(SPIKE_DEATH_RIGHT);
-		}
+void Player::isDead(bool isDead) {
+	if (isDead) {		
+		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+		//sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
 	}
 }
 
+void Player::isDeadByDoor(bool isDead) {
+	if (isDead) {
+		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+		//sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
+	}
+}
 
 

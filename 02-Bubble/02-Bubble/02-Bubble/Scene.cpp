@@ -38,31 +38,20 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	//mapTraps = TileMap::createTileMap("levels/level02traps.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
-	player->setTileMap(map);
+	state = 0;
 
-	bool result = initTraps("levels/level02traps.txt");
+	/*MENU*/
+	menu = new Menu();
+	menu->init(texProgram);
 
-	initTraps("levels/level02torxes.txt");
+	/*INIT CAMARA ORTOGONAL*/
+	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 
-
-	/*enemy=new Enemy();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,"sargent");
-	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSizeY()));
-	enemy->setTileMap(map);*/
-
-	initEnemies("levels/level02enemies.txt");
-
-
-	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
+	/*TEMPS INICIAL*/
 	currentTime = 0.0f;
 
+	/*MUSIC*/
 	playMusic("music/intro_theme.ogg");
 }
 
@@ -70,87 +59,140 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 
-	for each (Fire *fire in fires) {
-		fire->update(deltaTime);
-	}
-
-	player->update(deltaTime);
-	//enemy->update(deltaTime,player[0]);
-
-	for each (Enemy *enemy in enemies) {
-		enemy->update(deltaTime, player[0]);
-	}
-
-	for each (Spike *spike in spikes) {
-		spike->update(deltaTime,player);
-	}
-
-	for each (SpikeDoor *spikeDoor in spikeDoors) {
-		spikeDoor->update(deltaTime, player);
-	}
-
-	//spikes->update(deltaTime);
-
-	glm::ivec2 posicioActual = player->posPlayer;
-	if (((posicioActual[0] + 32) % 320) == 0 && camaraMoguda==false){
-		if ((SCREEN_WIDTH + camaraX) <= (posicioActual[0] + 32))
-			camaraX = camaraX + 320;
-		else
-			camaraX = camaraX - 320;
-		camaraMoguda = true;
-	}
-	else if (((posicioActual[1] + 120) % 192) == 0 && camaraMoguda == false){
-		if ((SCREEN_HEIGHT + camaraY) <= (posicioActual[1] + 120)){
-			camaraY = camaraY + 192;
+	if (state == 1){
+		/*UPDATE FIRE*/
+		for each (Fire *fire in fires) {
+			fire->update(deltaTime);
 		}
-		else
-			camaraY = camaraY - 192;
-		camaraMoguda = true;
+
+		/*UPDATE PRINCE*/
+		player->update(deltaTime);
+
+		/*UPDATE ENEMIES*/
+		for each (Enemy *enemy in enemies) {
+			enemy->update(deltaTime, player[0]);
+		}
+
+		/*UPDATE SPIKES*/
+		for each (Spike *spike in spikes) {
+			spike->update(deltaTime, player);
+		}
+
+		/*UPDATE SPIKEDOORS*/
+		for each (SpikeDoor *spikeDoor in spikeDoors) {
+			spikeDoor->update(deltaTime, player);
+		}
+
+		/*UPDATE CAMARA ORTOGONAL*/
+		glm::ivec2 posicioActual = player->posPlayer;
+		if (((posicioActual[0] + 32) % 320) == 0 && camaraMoguda == false){
+			if ((SCREEN_WIDTH + camaraX) <= (posicioActual[0] + 32))
+				camaraX = camaraX + 320;
+			else
+				camaraX = camaraX - 320;
+			camaraMoguda = true;
+		}
+		else if (((posicioActual[1] + 120) % 192) == 0 && camaraMoguda == false){
+			if ((SCREEN_HEIGHT + camaraY) <= (posicioActual[1] + 120)){
+				camaraY = camaraY + 192;
+			}
+			else
+				camaraY = camaraY - 192;
+			camaraMoguda = true;
+		}
+		else camaraMoguda = false;
+		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
-	else camaraMoguda = false;
-	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
+
+	if (state == 0){
+		bool start = menu->update(deltaTime);
+		if (start){
+			/*CHANGE STATE*/
+			state = 1;
+
+			/*CHANGE CAMARA POSITION*/
+			camaraY = 128.f;
+
+			/*INIT MAP*/
+			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+			/*INIT MAP COLUMNS*/
+			mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+			/*INIT PRINCE*/
+			player = new Player();
+			player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+			player->setTileMap(map);
+
+			/*INIT TRAPS*/
+			initTraps("levels/level02traps.txt");
+
+			/*INIT TOXES*/
+			initTraps("levels/level02torxes.txt");
+
+			/*INIT ENEMICS*/
+			initEnemies("levels/level02enemies.txt");
+		}
+	}
 }
 
 void Scene::render()
 {
 	glm::mat4 modelview;
 
-	//Mapa
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
-
-	for each (Fire *fire in fires){
-		fire->render();
+	if (state == 0){
+		/*MENU*/
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		menu->render();
 	}
+	else if (state == 1){
+		/*MAPA*/
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		map->render();
 
-	//Prince
-	player->render();
+		/*ANTORXES*/
+		for each (Fire *fire in fires){
+			fire->render();
+		}
 
-	for each (Enemy *enemy in enemies){
-		enemy->render();
+		/*PRINCE*/
+		player->render();
+
+		/*ENEMICS*/
+		for each (Enemy *enemy in enemies){
+			enemy->render();
+		}
+
+		/*TRAMPA PUNXES*/
+		for each (Spike *spike in spikes) {
+			spike->render();
+		}
+
+		/*TRAMPA PORTA*/
+		for each (SpikeDoor *spikeDoor in spikeDoors) {
+			spikeDoor->render();
+		}
+
+		/*COLUMNES*/
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		mapColumns->render();
 	}
-
-	for each (Spike *spike in spikes) {
-		spike->render();
-	}
-
-	for each (SpikeDoor *spikeDoor in spikeDoors) {
-		spikeDoor->render();
-	}
-
-	//Columnes
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	mapColumns->render();
 }
 
 void Scene::initShaders()
