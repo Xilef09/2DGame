@@ -7,8 +7,8 @@
 class SpikeDoor
 {
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player);
-	void update(int deltaTime);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void update(int deltaTime, Player *player);
 	void render();
 
 

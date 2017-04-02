@@ -21,7 +21,7 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 
-	void isDead(bool dead);
+	void isDead(bool dead, string cause);
 	glm::ivec2 posPlayer;
 	
 private:

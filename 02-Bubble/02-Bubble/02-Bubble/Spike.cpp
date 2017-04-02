@@ -46,7 +46,7 @@ void Spike::update(int deltaTime, Player *player)
 		case NOTHING:
 			if ((tileMapDispl.y - player->posPlayer.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
-				player->isDead(true);
+				player->isDead(true, "spike");
 			}
 		break;
 		case ALMOST_NOTHING:

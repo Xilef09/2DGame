@@ -9,7 +9,7 @@ enum PlayerAnims
 	NOTHING, ALMOST_NOTHING, HALF_VISIBLE, FULL_VISIBLE
 };
 
-void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player)
+void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 
 	spritesheet.loadFromFile("images/Traps.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -39,9 +39,9 @@ void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram,
 }
 
 
-void SpikeDoor::update(int deltaTime)
+void SpikeDoor::update(int deltaTime, Player* player)
 {
-
+	
 	bool acabada = sprite->update(deltaTime);
 
 	if (acabada) {
@@ -61,7 +61,10 @@ void SpikeDoor::update(int deltaTime)
 			break;
 		}
 	}
-	//mirar collisions amb el player, encara no se com fer-ho.
+
+	if ((tileMapDispl.y - player->posPlayer.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
+		player->isDead(true, "spikeDoor");
+	}
 }
 
 void SpikeDoor::render() {
