@@ -9,7 +9,7 @@ enum PlayerAnims
 	NOTHING, ALMOST_NOTHING, HALF_VISIBLE, FULL_VISIBLE
 };
 
-void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player)
+void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	
 	spritesheet.loadFromFile("images/Traps.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -28,8 +28,6 @@ void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Pla
 	sprite->setAnimationSpeed(FULL_VISIBLE, 8);
 	sprite->addKeyframe(FULL_VISIBLE, glm::vec2(0.3f, 0.0f));
 
-	this->player = player;
-
 	sprite->changeAnimation(NOTHING);
 	tileMapDispl = tileMapPos;
 	//investigar com agafar trap position
@@ -39,28 +37,36 @@ void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Pla
 }
 
 
-void Spike::update(int deltaTime)
+void Spike::update(int deltaTime, Player player)
 {
-	
 	bool acabada = sprite->update(deltaTime);
-
 	if (acabada) {
 		switch (sprite->animation())
 		{
 		case NOTHING:
-		sprite->changeAnimation(ALMOST_NOTHING);
+			if ((tileMapDispl.y - player.posPlayer.y) < 64 && (player.posPlayer.x - tileMapDispl.x) == 0) {
+				sprite->changeAnimation(ALMOST_NOTHING);
+			}
 		break;
 		case ALMOST_NOTHING:
-		sprite->changeAnimation(HALF_VISIBLE);
+			sprite->changeAnimation(HALF_VISIBLE);
 		break;
 		case HALF_VISIBLE:
-		sprite->changeAnimation(FULL_VISIBLE);
+			sprite->changeAnimation(FULL_VISIBLE);
 		break;
 		case FULL_VISIBLE:
-		sprite->changeAnimation(NOTHING);
+			//sprite->changeAnimation(FULL_VISIBLE);
 		break;
 		}
 	}
+	/*
+	if ((tileMapDispl.y - player.posPlayer.y) < 64 && (player.posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() == NOTHING) {
+		sprite->changeAnimation(FULL_VISIBLE);
+	}
+	else if ((player.posPlayer.y - tileMapDispl.y) < 64 && (player.posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
+		sprite->changeAnimation(FULL_VISIBLE);
+	}
+	*/
 	
 	//mirar collisions amb el player, encara no se com fer-ho.
 }
