@@ -165,7 +165,21 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 // already intersecting a tile below.
 bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
+	int x0, x1, y;
 
+	x0 = pos.x / tileSizeX;
+	x1 = (pos.x + size.x - 1) / tileSizeX;
+	y = (pos.y + size.y - 1) / tileSizeY;
+
+
+	if (map[(y)*mapSize.x + x0 + 1] != 1 && map[(y)*mapSize.x + x0 + 1] != 2 && map[(y)*mapSize.x + x0 + 1] != 12 
+		&& map[(y)*mapSize.x + x0 + 1] != 13 && map[(y)*mapSize.x + x0 + 1] != 14 && map[(y)*mapSize.x + x0 + 1] != 17
+		&& map[(y)*mapSize.x + x0 + 1] != 19 && map[(y)*mapSize.x + x0 + 1] != 20 && map[(y)*mapSize.x + x0 + 1] != 27
+		&& map[(y)*mapSize.x + x0 + 1] != 31 && map[(y)*mapSize.x + x0 + 1] != 32 && map[(y)*mapSize.x + x0 + 1] != 33
+		&& map[(y)*mapSize.x + x0 + 1] != 34 && map[(y)*mapSize.x + x0 + 1] != 40 && map[(y)*mapSize.x + x0 + 1] != 41)
+	{
+		return true;
+	}
 	/*int x, y0, y1;
 
 	x = (pos.x / tileSizeX) - 1;
@@ -184,7 +198,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 
 	x = (pos.x / tileSizeX) - 1;
 	y0 = pos.y / tileSizeY;
-	y1 = (pos.y + size.y - 1) / tileSizeY;
+	//y1 = (pos.y + size.y - 1) / tileSizeY;
 	//for (int y = y0; y <= y1; y++){
 		if (map[(y0 + 1)*mapSize.x + x+2] == 3 || map[(y0 + 1)*mapSize.x + x+2] == 16)
 			return true;
@@ -200,7 +214,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	
 	x = ((pos.x + size.x - 1) / tileSizeX)+1;
 	y0 = pos.y / tileSizeY;
-	y1 = (pos.y + size.y - 1) / tileSizeY;
+	//y1 = (pos.y + size.y - 1) / tileSizeY;
 	//for(int y=y0; y<=y1; y++)
 	//{
 		if (map[(y0 + 1)*mapSize.x + x-1] == 3 || map[(y0 + 1)*mapSize.x + x-1] == 2 || map[(y0 + 1)*mapSize.x + x-1] == 16)
@@ -216,19 +230,19 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	int x0, x1, y;
 	
 	x0 = pos.x / tileSizeX;
-	x1 = (pos.x + size.x - 1) / tileSizeX;
+	//x1 = (pos.x + size.x - 1) / tileSizeX;
 	y = (pos.y + size.y - 1) / tileSizeY;
-	for(int x=x0; x<=x1; x++)
-	{
-		if (map[(y)*mapSize.x + x + 1] != 1 && map[(y)*mapSize.x + x + 1] != 31 && map[(y)*mapSize.x + x + 1] != 32 && map[(y)*mapSize.x + x + 1] != 33 && map[(y)*mapSize.x + x + 1] != 34 && map[(y)*mapSize.x + x + 1] != 2)
+	//for(int x=x0; x<=x1; x++)
+	//{
+		if (map[(y)*mapSize.x + x0 + 1] != 1 && map[(y)*mapSize.x + x0 + 1] != 31 && map[(y)*mapSize.x + x0 + 1] != 32 && map[(y)*mapSize.x + x0 + 1] != 33 && map[(y)*mapSize.x + x0 + 1] != 34 && map[(y)*mapSize.x + x0 + 1] != 2)
 		{
 			if(*posY - tileSizeY * y + size.y <= 4)
 			{
-				*posY = tileSizeY * y - size.y;
-				return true;
+				*posY = tileSizeY * y - size.y;				
 			}
+			return true;
 		}
-	}
+	//}
 	return false;
 }
 

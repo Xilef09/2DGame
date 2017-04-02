@@ -24,13 +24,14 @@ public:
 	glm::ivec2 posPlayer;
 	
 private:
-	bool bJumping;
+	bool bJumping, falling;
 	glm::ivec2 tileMapDispl;
 	int jumpAngle, startY;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
 	string direccion;
+	float jumpDistance;
 
 };
 

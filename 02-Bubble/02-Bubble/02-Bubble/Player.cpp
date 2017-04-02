@@ -338,8 +338,10 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			if(jumpAngle > 90)
+			if (!map->collisionMoveUp(posPlayer, glm::ivec2(32, 64))) {
+				posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			}
+			if (jumpAngle > 90)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y);
 		}		
 	}
