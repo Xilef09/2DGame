@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include <SFML/Audio.hpp>
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
@@ -55,6 +56,8 @@ private:
 	vector<SpikeDoor *> spikeDoors;
 	vector<Fire *> fires;
 	vector<Enemy *> enemies;
+
+	sf::Music music;
 
 	int state;
 };

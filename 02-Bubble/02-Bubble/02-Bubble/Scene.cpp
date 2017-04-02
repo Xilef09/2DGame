@@ -6,7 +6,6 @@
 #include <string>
 #include "Scene.h"
 #include "Game.h"
-#include <SFML/Audio.hpp>
 
 
 
@@ -406,7 +405,6 @@ bool Scene::initTraps(const string &file) {
 
 void Scene::playMusic(const string &fileName) {
 
-	sf::Music music;
 	if (!music.openFromFile(fileName))
 		return;
 	music.play();
