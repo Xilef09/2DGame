@@ -27,6 +27,7 @@ public:
 
 	bool initEnemies(string levelFile);
 	bool initTraps(const string &file);
+	void playMusic(const string &fileName);
 
 	
 

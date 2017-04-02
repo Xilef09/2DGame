@@ -338,10 +338,8 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			if (!map->collisionMoveUp(posPlayer, glm::ivec2(32, 64))) {
-				posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			}
-			if (jumpAngle > 90)
+			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			if(jumpAngle > 90)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y);
 		}		
 	}
@@ -349,7 +347,6 @@ void Player::update(int deltaTime)
 	{
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
-
 		{
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{

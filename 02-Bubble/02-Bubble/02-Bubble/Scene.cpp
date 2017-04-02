@@ -6,6 +6,7 @@
 #include <string>
 #include "Scene.h"
 #include "Game.h"
+#include <SFML/Audio.hpp>
 
 
 
@@ -37,8 +38,8 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//mapTraps = TileMap::createTileMap("levels/level02traps.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	player = new Player();
@@ -50,6 +51,8 @@ void Scene::init()
 
 	initEnemies("levels/level02enemies.txt");
 
+	
+
 	/*enemy=new Enemy();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,"sargent");
 	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSizeY()));
@@ -57,6 +60,8 @@ void Scene::init()
 
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
 	currentTime = 0.0f;
+
+	playMusic("music/intro_theme.ogg");
 }
 
 void Scene::update(int deltaTime)
@@ -284,6 +289,15 @@ bool Scene::initTraps(const string &file) {
 	fin.close();
 	
 	return true;
+	
+}
+
+void Scene::playMusic(const string &fileName) {
+
+	sf::Music music;
+	if (!music.openFromFile(fileName))
+		return;
+	music.play();
 	
 }
 
