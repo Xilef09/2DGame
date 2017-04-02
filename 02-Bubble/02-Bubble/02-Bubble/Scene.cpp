@@ -6,6 +6,7 @@
 #include <string>
 #include "Scene.h"
 #include "Game.h"
+#include <SFML/Audio.hpp>
 
 
 
@@ -37,6 +38,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
+
 	/*MENU*/
 	menu = new Menu();
 	menu->init(texProgram);
@@ -52,12 +54,21 @@ void Scene::init()
 
 	bool result = initTraps("levels/level02traps.txt");
 
-	initTraps("levels/level01torxes.txt");
+	initTraps("levels/level02torxes.txt");
+
+
+	/*enemy=new Enemy();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,"sargent");
+	enemy->setPosition(glm::vec2((INIT_PLAYER_X_TILES-2)* map->getTileSize(), (INIT_PLAYER_Y_TILES) * map->getTileSizeY()));
+	enemy->setTileMap(map);*/
 
 	initEnemies("levels/level02enemies.txt");
 
+
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY),camaraY);
 	currentTime = 0.0f;
+
+	playMusic("music/intro_theme.ogg");
 }
 
 void Scene::update(int deltaTime)
@@ -79,7 +90,7 @@ void Scene::update(int deltaTime)
 	}
 
 	for each (Spike *spike in spikes) {
-		spike->update(deltaTime,player[0]);
+		spike->update(deltaTime,player);
 	}
 
 	for each (SpikeDoor *spikeDoor in spikeDoors) {
@@ -308,6 +319,15 @@ bool Scene::initTraps(const string &file) {
 	fin.close();
 	
 	return true;
+	
+}
+
+void Scene::playMusic(const string &fileName) {
+
+	sf::Music music;
+	if (!music.openFromFile(fileName))
+		return;
+	music.play();
 	
 }
 

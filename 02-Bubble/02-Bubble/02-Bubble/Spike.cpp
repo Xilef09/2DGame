@@ -37,15 +37,16 @@ void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 }
 
 
-void Spike::update(int deltaTime, Player player)
+void Spike::update(int deltaTime, Player *player)
 {
 	bool acabada = sprite->update(deltaTime);
 	if (acabada) {
 		switch (sprite->animation())
 		{
 		case NOTHING:
-			if ((tileMapDispl.y - player.posPlayer.y) < 64 && (player.posPlayer.x - tileMapDispl.x) == 0) {
+			if ((tileMapDispl.y - player->posPlayer.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
+				player->isDead(true);
 			}
 		break;
 		case ALMOST_NOTHING:
@@ -55,7 +56,7 @@ void Spike::update(int deltaTime, Player player)
 			sprite->changeAnimation(FULL_VISIBLE);
 		break;
 		case FULL_VISIBLE:
-			//sprite->changeAnimation(FULL_VISIBLE);
+			sprite->changeAnimation(NOTHING);
 		break;
 		}
 	}
