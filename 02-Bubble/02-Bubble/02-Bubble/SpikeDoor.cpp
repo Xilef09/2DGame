@@ -61,7 +61,6 @@ void SpikeDoor::update(int deltaTime)
 			break;
 		}
 	}
-
 	//mirar collisions amb el player, encara no se com fer-ho.
 }
 

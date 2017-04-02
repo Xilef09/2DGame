@@ -70,7 +70,7 @@ void Scene::update(int deltaTime)
 	}
 
 	for each (Spike *spike in spikes) {
-		spike->update(deltaTime);
+		spike->update(deltaTime, player[0]);
 	}
 
 	for each (SpikeDoor *spikeDoor in spikeDoors) {
@@ -250,7 +250,7 @@ bool Scene::initTraps(const string &file) {
 			if (stoi(tile) == 1) 
 			{ //spike
 				spike = new Spike();
-				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram, player);
+				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram);
 				spikes.push_back(spike);
 			}
 			else if (stoi(tile) == 2)

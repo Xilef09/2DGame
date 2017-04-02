@@ -7,13 +7,12 @@
 class Spike
 {
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Player *player);
-	void update(int deltaTime);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void update(int deltaTime, Player player);
 	void render();
 
 
 	glm::ivec2 trapPosition;
-	int trapId;
 
 private:
 	bool bJumping;
@@ -22,7 +21,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
-	Player *player;
+	
 };
 
 #endif // _SPIKE_INCLUDE

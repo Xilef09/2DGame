@@ -217,10 +217,12 @@ void Player::update(int deltaTime)
 			break;
 		case START_MOVING_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_RIGHT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(START_MOVING_RIGHT);
 			else sprite->changeAnimation(MOVE_RIGHT);
 			break;
 		case START_MOVING_LEFT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_LEFT);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(START_MOVING_LEFT);
 			else sprite->changeAnimation(MOVE_LEFT);
 			break;
 		case MOVE_LEFT:
