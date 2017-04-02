@@ -1,3 +1,6 @@
+TILEMAP
+104 15
+images/torxa02.png
 0
 0
 0
