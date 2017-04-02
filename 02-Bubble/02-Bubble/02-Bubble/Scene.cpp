@@ -6,7 +6,6 @@
 #include <string>
 #include "Scene.h"
 #include "Game.h"
-#include <SFML/Audio.hpp>
 
 
 
@@ -59,7 +58,10 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 
-	if (state == 1){
+	bool nextLevel = menu->update(deltaTime);
+
+	if ((state == 2 || state == 1) && nextLevel == false){
+
 		/*UPDATE FIRE*/
 		for each (Fire *fire in fires) {
 			fire->update(deltaTime);
@@ -103,37 +105,84 @@ void Scene::update(int deltaTime)
 		else camaraMoguda = false;
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
+	else if (state == 2 && nextLevel == true){
+		/*CHANGE STATE*/
+		state = 0;
+		menu = new Menu();
+		menu->init(texProgram);
 
-	if (state == 0){
-		bool start = menu->update(deltaTime);
-		if (start){
-			/*CHANGE STATE*/
-			state = 1;
+		camaraY = 0.f;
+		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
+	}
+	else if (state == 1 && nextLevel == true){
+		/*CHANGE STATE*/
+		state = 2;
 
-			/*CHANGE CAMARA POSITION*/
-			camaraY = 128.f;
+		/*CLEAR LEVEL 01 SPRIES*/
+		spikes.clear();
+		spikeDoors.clear();
+		fires.clear();
+		enemies.clear();
 
-			/*INIT MAP*/
-			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+		/*INIT LEVEL02*/
+		/*CHANGE CAMARA POSITION*/
+		camaraY = 128.f;
 
-			/*INIT MAP COLUMNS*/
-			mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+		/*INIT MAP*/
+		map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-			/*INIT PRINCE*/
-			player = new Player();
-			player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
-			player->setTileMap(map);
+		/*INIT MAP COLUMNS*/
+		mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-			/*INIT TRAPS*/
-			initTraps("levels/level02traps.txt");
+		/*INIT PRINCE*/
+		player = new Player();
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+		player->setTileMap(map);
 
-			/*INIT TOXES*/
-			initTraps("levels/level02torxes.txt");
+		/*INIT TRAPS*/
+		initTraps("levels/level02traps.txt");
 
-			/*INIT ENEMICS*/
-			initEnemies("levels/level02enemies.txt");
-		}
+		/*INIT TOXES*/
+		initTraps("levels/level02torxes.txt");
+
+		/*INIT ENEMICS*/
+		initEnemies("levels/level02enemies.txt");
+	}
+	else if (state == 0 && nextLevel == true){
+		/*CHANGE STATE*/
+		state = 1;
+
+		/*CLEAR LEVEL 01 SPRIES*/
+		spikes.clear();
+		spikeDoors.clear();
+		fires.clear();
+		enemies.clear();
+
+		/*INIT LEVEL02*/
+		/*CHANGE CAMARA POSITION*/
+		camaraY = 128.f;
+
+		/*INIT MAP*/
+		map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+		/*INIT MAP COLUMNS*/
+		mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+		/*INIT PRINCE*/
+		player = new Player();
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+		player->setTileMap(map);
+
+		/*INIT TRAPS*/
+		initTraps("levels/level01traps.txt");
+
+		/*INIT TOXES*/
+		initTraps("levels/level01torxes.txt");
+
+		/*INIT ENEMICS*/
+		initEnemies("levels/level01enemies.txt");
 	}
 }
 
@@ -151,7 +200,7 @@ void Scene::render()
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 		menu->render();
 	}
-	else if (state == 1){
+	else if (state == 1 || state == 2){
 		/*MAPA*/
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -356,7 +405,6 @@ bool Scene::initTraps(const string &file) {
 
 void Scene::playMusic(const string &fileName) {
 
-	sf::Music music;
 	if (!music.openFromFile(fileName))
 		return;
 	music.play();

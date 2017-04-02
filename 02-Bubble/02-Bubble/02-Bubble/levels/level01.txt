@@ -68,8 +68,8 @@ images/level1tiles.png
 14
 15
 27
-0
-0
+1
+1
 14
 9
 9
