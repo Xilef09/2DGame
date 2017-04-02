@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "Spike.h"
 #include "SpikeDoor.h"
+#include "Fire.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -40,6 +41,7 @@ private:
 	Spike *spike;
 	SpikeDoor *spikeDoor;
 	Enemy *enemy;
+	Fire *fire;
 	ShaderProgram texProgram;
 	float currentTime; 
 	float camaraY = 128.f, camaraX = 0.f;
@@ -48,7 +50,7 @@ private:
 	
 	vector<Spike *> spikes;
 	vector<SpikeDoor *> spikeDoors;
-
+	vector<Fire *> fires;
 	vector<Enemy *> enemies;
 
 	
