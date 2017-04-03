@@ -416,4 +416,3 @@ void Player::isDeadByDoor(bool isDead) {
 	}
 }
 
-

@@ -7,12 +7,12 @@
 
 enum EnemyAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, ATTACK_LEFT, ATTACK_RIGHT, DEAD_LEFT, DEAD_RIGHT
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, ATTACK_LEFT, ATTACK_RIGHT, DEAD_LEFT, DEAD_RIGHT, DISAPEAR
 };
 
 void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, string enemyType, string direction)
 {
-	direccion = "";
+	direccion = direction;
 	bJumping = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/"+enemyType+".png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -100,6 +100,10 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, str
 	sprite->addKeyframe(DEAD_RIGHT, glm::vec2(0.7f, 0.75f));
 	sprite->addKeyframe(DEAD_RIGHT, glm::vec2(0.8f, 0.75f));
 
+	sprite->setAnimationSpeed(DISAPEAR, 8);
+	sprite->addKeyframe(DISAPEAR, glm::vec2(0.8f, 0.75f));
+
+
 	if (direction.compare(0, 5, "right") == 0)
 		sprite->changeAnimation(STAND_RIGHT);
 	else
@@ -110,9 +114,25 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, str
 
 void Enemy::update(int deltaTime, Player player)
 {
-	bool acabada = sprite->update(deltaTime);
-	if (acabada){
-		switch (sprite->animation()){
+	if ((((player.posPlayer.x - posEnemy.x) < 50 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y) &&
+		player.sprite->getCurrentKeyFrame() == 5 && player.sprite->animation() == 17) && sprite->animation()!=DISAPEAR){
+		if (direccion.compare(0, 5, "right"))
+			sprite->changeAnimation(DEAD_LEFT);
+		else 
+			sprite->changeAnimation(DEAD_RIGHT);
+	}
+
+	else if ((((posEnemy.x - player.posPlayer.x) < 50 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y) &&
+		player.sprite->getCurrentKeyFrame() == 5 && player.sprite->animation() == 16) && sprite->animation() != DISAPEAR){
+		if (direccion.compare(0, 5, "right"))
+			sprite->changeAnimation(DEAD_LEFT);
+		else
+			sprite->changeAnimation(DEAD_RIGHT);
+	}
+	else{
+		bool acabada = sprite->update(deltaTime);
+		if (acabada){
+			switch (sprite->animation()){
 			case STAND_RIGHT:
 				if ((player.posPlayer.x - posEnemy.x) < 34 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y){
 					int mov = rand() % 5;
@@ -191,13 +211,19 @@ void Enemy::update(int deltaTime, Player player)
 				}
 				else sprite->changeAnimation(STAND_LEFT);
 				break;
+			case DEAD_LEFT:
+				sprite->changeAnimation(DISAPEAR);
+				break;
+			case DEAD_RIGHT:
+				sprite->changeAnimation(DISAPEAR);
+				break;
+			}
 		}
+
+		if (sprite->animation() == MOVE_RIGHT) posEnemy.x += 1;
+		if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
+		//MODIFICAR POSICIONS
 	}
-
-	if (sprite->animation() == MOVE_RIGHT) posEnemy.x += 1;
-	if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
-	//MODIFICAR POSICIONS
-
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }

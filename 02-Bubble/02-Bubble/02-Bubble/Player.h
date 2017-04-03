@@ -25,13 +25,14 @@ public:
 	void isDeadByDoor(bool dead);
 
 	glm::ivec2 posPlayer;
+	Sprite *sprite;
+
 	
 private:
 	bool bJumping, falling;
 	glm::ivec2 tileMapDispl;
 	int jumpAngle, startY;
 	Texture spritesheet;
-	Sprite *sprite;
 	TileMap *map;
 	string direccion;
 	float jumpDistance;
