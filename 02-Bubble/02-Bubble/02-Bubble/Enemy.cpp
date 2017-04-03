@@ -221,8 +221,11 @@ void Enemy::update(int deltaTime, Player player)
 		}
 
 		if (sprite->animation() == MOVE_RIGHT) posEnemy.x += 1;
-		if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
-		//MODIFICAR POSICIONS
+		else if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
+
+		//MATAR AL PRINCE
+		/*else if (sprite->animation() == ATTACK_LEFT) player.sprite->changeAnimation();
+		else if (sprite->animation() == ATTACK_RIGHT) player.sprite->changeAnimation();*/
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
