@@ -16,19 +16,19 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_RIGHT, JUMP_LEFT, JUMP_RUN_RIGHT, JUMP_RUN_LEFT,
 	JUMP_STAND_LEFT, CHANGE_DIRECTION_LEFT, CHANGE_DIRECTION_RIGHT, JUMP_STAND_RIGHT, START_MOVING_RIGHT, 
 	START_MOVING_LEFT, CLIMB_RIGHT, CLIMB_LEFT, ATTACK_RIGHT, ATTACK_LEFT, SPIKE_DEATH_LEFT, SPIKE_DEATH_RIGHT,
-	SPIKE_DOOR_DEATH_RIGHT
+	SPIKE_DOOR_DEATH_RIGHT, SPIKE_DOOR_DEATH_LEFT, DEATH_LEFT, DEATH_RIGHT
 };
 
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	
+	lives = 3;
 	direccion = "";
 	bJumping = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/princeSpriteSheet2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(20);
+	sprite->setNumberAnimations(24);
 	
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
 	sprite->addKeyframe(STAND_LEFT, glm::vec2(-0.1f, 0.f));
@@ -52,10 +52,25 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.1f, 0.8f));
 	sprite->addKeyframe(SPIKE_DEATH_RIGHT, glm::vec2(0.2f, 0.8f));
 
+	sprite->setAnimationSpeed(DEATH_LEFT, 8);
+	sprite->addKeyframe(DEATH_LEFT, glm::vec2(-0.4f, 0.8f));
+	sprite->addKeyframe(DEATH_LEFT, glm::vec2(-0.5f, 0.8f));
+	sprite->addKeyframe(DEATH_LEFT, glm::vec2(-0.6f, 0.8f));
+
+	sprite->setAnimationSpeed(DEATH_RIGHT, 8);
+	sprite->addKeyframe(DEATH_RIGHT, glm::vec2(0.4f, 0.8f));
+	sprite->addKeyframe(DEATH_RIGHT, glm::vec2(0.5f, 0.8f));
+	sprite->addKeyframe(DEATH_RIGHT, glm::vec2(0.6f, 0.8f));
+
 	sprite->setAnimationSpeed(SPIKE_DOOR_DEATH_RIGHT, 8);
 	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.7f, 0.8f));
 	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.8f, 0.8f));
 	sprite->addKeyframe(SPIKE_DOOR_DEATH_RIGHT, glm::vec2(0.9f, 0.8f));
+
+	sprite->setAnimationSpeed(SPIKE_DOOR_DEATH_LEFT, 8);
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_LEFT, glm::vec2(-0.7f, 0.8f));
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_LEFT, glm::vec2(-0.8f, 0.8f));
+	sprite->addKeyframe(SPIKE_DOOR_DEATH_LEFT, glm::vec2(-0.9f, 0.8f));
 	
 	sprite->setAnimationSpeed(START_MOVING_RIGHT, 8);
 	sprite->addKeyframe(START_MOVING_RIGHT, glm::vec2(0.1f, 0.1f));
@@ -171,7 +186,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.7f, 0.6f));
 	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.8f, 0.6f));
 	sprite->addKeyframe(CLIMB_RIGHT, glm::vec2(0.9f, 0.6f));
-
 
 	sprite->setAnimationSpeed(CLIMB_LEFT, 8);
 	sprite->addKeyframe(CLIMB_LEFT, glm::vec2(-0.1f, 0.6f));
@@ -411,8 +425,8 @@ void Player::isDead(bool isDead) {
 
 void Player::isDeadByDoor(bool isDead) {
 	if (isDead) {
-		sprite->changeAnimation(SPIKE_DEATH_RIGHT);
-		//sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
+		//sprite->changeAnimation(SPIKE_DEATH_RIGHT);
+		sprite->changeAnimation(SPIKE_DOOR_DEATH_RIGHT);
 	}
 }
 

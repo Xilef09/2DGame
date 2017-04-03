@@ -303,7 +303,7 @@ bool Scene::initEnemies(string levelFile){
 		getline(fin, posY);
 
 		enemy = new Enemy();
-		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, enemyType,direction);
+		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, enemyType,direction, this);
 		enemy->setPosition(glm::vec2(stoi(posX)* map->getTileSize(), stoi(posY)* map->getTileSizeY()));
 		enemy->setTileMap(map);
 
@@ -404,7 +404,6 @@ bool Scene::initTraps(const string &file) {
 }
 
 void Scene::playMusic(const string &fileName) {
-
 	if (!music.openFromFile(fileName))
 		return;
 	music.play();

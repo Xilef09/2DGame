@@ -36,6 +36,7 @@ private:
 	TileMap *map;
 	string direccion;
 	float jumpDistance;
+	int lives;
 
 };
 

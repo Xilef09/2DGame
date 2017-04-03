@@ -10,8 +10,10 @@ enum EnemyAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, ATTACK_LEFT, ATTACK_RIGHT, DEAD_LEFT, DEAD_RIGHT, DISAPEAR
 };
 
-void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, string enemyType, string direction)
+void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, string enemyType, string direction, Scene *scene)
 {
+	this->scene = scene;
+
 	direccion = direction;
 	bJumping = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
@@ -120,6 +122,7 @@ void Enemy::update(int deltaTime, Player player)
 			sprite->changeAnimation(DEAD_LEFT);
 		else 
 			sprite->changeAnimation(DEAD_RIGHT);
+		scene->playMusic("music/guard_death.ogg");
 	}
 
 	else if ((((posEnemy.x - player.posPlayer.x) < 50 && (posEnemy.x - player.posPlayer.x) >= 0 && posEnemy[1] == player.posPlayer.y) &&
@@ -128,6 +131,8 @@ void Enemy::update(int deltaTime, Player player)
 			sprite->changeAnimation(DEAD_LEFT);
 		else
 			sprite->changeAnimation(DEAD_RIGHT);
+		scene->playMusic("music/guard_death.ogg");
+
 	}
 	else{
 		bool acabada = sprite->update(deltaTime);
