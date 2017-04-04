@@ -328,6 +328,12 @@ void Player::update(int deltaTime)
 		case SPIKE_DOOR_DEATH_RIGHT:
 			//restart level
 			break;
+		case DEATH_RIGHT:
+			//restart level
+			break;
+		case DEATH_LEFT:
+			//restart level
+			break;
 		}
 	}
 	

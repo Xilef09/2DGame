@@ -232,12 +232,12 @@ void Enemy::update(int deltaTime, Player &player)
 		else if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() == 4){
 			player.setLives();
 			if (player.getLives() == 0)
-				player.sprite->changeAnimation(19);
+				player.sprite->changeAnimation(23);
 		}
 		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame()==4){
 			player.setLives();
 			if (player.getLives() == 0)
-				player.sprite->changeAnimation(19);
+				player.sprite->changeAnimation(24);
 		}
 	}
 
