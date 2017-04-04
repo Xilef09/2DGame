@@ -112,6 +112,7 @@ void Scene::update(int deltaTime)
 		menu->init(texProgram);
 
 		camaraY = 0.f;
+		camaraX = 0.f;
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
 	else if (state == 1 && nextLevel == true){
@@ -127,6 +128,7 @@ void Scene::update(int deltaTime)
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
 		camaraY = 128.f;
+		camaraX = 0.f;
 
 		/*INIT MAP*/
 		map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -162,6 +164,7 @@ void Scene::update(int deltaTime)
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
 		camaraY = 128.f;
+		camaraX = 0.f;
 
 		/*INIT MAP*/
 		map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);

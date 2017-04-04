@@ -23,6 +23,8 @@ public:
 
 	void isDead(bool dead);
 	void isDeadByDoor(bool dead);
+	void setLives();
+	int getLives();
 
 	glm::ivec2 posPlayer;
 	Sprite *sprite;
@@ -37,7 +39,6 @@ private:
 	string direccion;
 	float jumpDistance;
 	int lives;
-
 };
 
 

@@ -430,3 +430,11 @@ void Player::isDeadByDoor(bool isDead) {
 	}
 }
 
+void Player::setLives(){
+	lives = lives -1;
+}
+
+int Player::getLives(){
+	return lives;
+}
+

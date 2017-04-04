@@ -114,7 +114,7 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, str
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
 }
 
-void Enemy::update(int deltaTime, Player player)
+void Enemy::update(int deltaTime, Player &player)
 {
 	if ((((player.posPlayer.x - posEnemy.x) < 50 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y) &&
 		player.sprite->getCurrentKeyFrame() == 5 && player.sprite->animation() == 17) && sprite->animation()!=DISAPEAR){
@@ -229,8 +229,16 @@ void Enemy::update(int deltaTime, Player player)
 		else if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
 
 		//MATAR AL PRINCE
-		/*else if (sprite->animation() == ATTACK_LEFT) player.sprite->changeAnimation();
-		else if (sprite->animation() == ATTACK_RIGHT) player.sprite->changeAnimation();*/
+		else if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() == 4){
+			player.setLives();
+			if (player.getLives() == 0)
+				player.sprite->changeAnimation(19);
+		}
+		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame()==4){
+			player.setLives();
+			if (player.getLives() == 0)
+				player.sprite->changeAnimation(19);
+		}
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
