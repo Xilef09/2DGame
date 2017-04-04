@@ -204,6 +204,7 @@ void Scene::render()
 		menu->render();
 	}
 	else if (state == 1 || state == 2){
+		stopMusic();
 		/*MAPA*/
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -411,6 +412,10 @@ void Scene::playMusic(const string &fileName) {
 		return;
 	music.play();
 	
+}
+
+void Scene::stopMusic() {
+	music.stop();
 }
 
 
