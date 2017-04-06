@@ -478,3 +478,7 @@ int Player::getLives(){
 	return lives;
 }
 
+void Player::setLivePosition(const glm::vec2 &pos){
+	spriteLive->setPosition(glm::vec2(float(pos.x), float(pos.y)));
+}
+

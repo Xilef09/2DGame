@@ -21,6 +21,7 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setLivePosition(const glm::vec2 &pos);
 
 	void isDead(bool dead);
 	void isDeadByDoor(bool dead);

@@ -104,6 +104,7 @@ void Scene::update(int deltaTime)
 		}
 		else camaraMoguda = false;
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
+		player->setLivePosition(glm::vec2(camaraX,camaraY+192));
 	}
 	else if (state == 2 && nextLevel == true){
 		/*CHANGE STATE*/
