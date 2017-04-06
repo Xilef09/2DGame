@@ -17,6 +17,7 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
+	void renderLive();
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
@@ -27,14 +28,14 @@ public:
 	int getLives();
 
 	glm::ivec2 posPlayer;
-	Sprite *sprite;
+	Sprite *sprite, *spriteLive;
 
 	
 private:
 	bool bJumping, falling;
 	glm::ivec2 tileMapDispl;
 	int jumpAngle, startY;
-	Texture spritesheet;
+	Texture spritesheet, spritesheet1Live, spritesheet2Live, spritesheet3Live, spritesheetGameOver;
 	TileMap *map;
 	string direccion;
 	float jumpDistance;

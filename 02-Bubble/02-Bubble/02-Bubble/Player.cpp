@@ -19,12 +19,40 @@ enum PlayerAnims
 	SPIKE_DOOR_DEATH_RIGHT, SPIKE_DOOR_DEATH_LEFT, DEATH_LEFT, DEATH_RIGHT
 };
 
+enum LiveAnims{
+	LIVES
+};
+
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	lives = 3;
 	direccion = "";
 	bJumping = false;
+
+	//Barra de vida
+	spritesheet1Live.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheet1Live.loadFromFile("images/livebar1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+	spritesheet2Live.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheet2Live.loadFromFile("images/livebar2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+	spritesheet3Live.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheet3Live.loadFromFile("images/livebar3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+	spritesheetGameOver.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheetGameOver.loadFromFile("images/livebarover.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+	spriteLive = Sprite::createSprite(glm::ivec2(320, 10), glm::vec2(1, 1), &spritesheet3Live, &shaderProgram);
+	spriteLive->setNumberAnimations(1);
+
+	spriteLive->setAnimationSpeed(LIVES, 8);
+	spriteLive->addKeyframe(LIVES, glm::vec2(0.f, 0.f));
+
+	spriteLive->changeAnimation(LIVES);
+	spriteLive->setPosition(glm::vec2(0.f, 320.f));
+
+	//Player sprites
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/princeSpriteSheet2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
@@ -402,13 +430,19 @@ void Player::update(int deltaTime)
 		}
 	}
 	
-	
+	if (lives == 2) spriteLive->changeSpitesheet(&spritesheet2Live);
+	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
+	else if (lives == 0) spriteLive->changeSpitesheet(&spritesheetGameOver);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
 {
 	sprite->render();
+}
+
+void Player::renderLive(){
+	spriteLive->render();
 }
 
 void Player::setTileMap(TileMap *tileMap)
