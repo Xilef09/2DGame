@@ -16,6 +16,7 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, str
 
 	direccion = direction;
 	bJumping = false;
+	delayAtac = false;
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
 	spritesheet.loadFromFile("images/"+enemyType+".png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.25), &spritesheet, &shaderProgram);
@@ -225,19 +226,30 @@ void Enemy::update(int deltaTime, Player &player)
 			}
 		}
 
-		if (sprite->animation() == MOVE_RIGHT) posEnemy.x += 1;
-		else if (sprite->animation() == MOVE_LEFT) posEnemy.x -= 1;
+		if (sprite->animation() == MOVE_RIGHT){
+			posEnemy.x += 1;
+			delayAtac = false;
+		}
+		else if (sprite->animation() == MOVE_LEFT){
+			posEnemy.x -= 1;
+			delayAtac = false;
+		}
 
 		//MATAR AL PRINCE
-		else if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() == 4){
+		else if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() == 4 && delayAtac == false){
+			delayAtac = true;
 			player.setLives();
 			if (player.getLives() == 0)
 				player.sprite->changeAnimation(23);
 		}
-		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame()==4){
+		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame() == 4 && delayAtac == false){
+			delayAtac = true;
 			player.setLives();
 			if (player.getLives() == 0)
 				player.sprite->changeAnimation(24);
+		}
+		else if (sprite->animation() != ATTACK_LEFT && sprite->animation() != ATTACK_RIGHT){
+			delayAtac = false;
 		}
 	}
 

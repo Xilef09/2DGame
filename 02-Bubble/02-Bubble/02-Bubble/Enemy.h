@@ -22,7 +22,7 @@ public:
 	glm::ivec2 posEnemy;
 
 private:
-	bool bJumping;
+	bool bJumping, delayAtac;
 	glm::ivec2 tileMapDispl;
 	int jumpAngle, startY;
 	Texture spritesheet;
