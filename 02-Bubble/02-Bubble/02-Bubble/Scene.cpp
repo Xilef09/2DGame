@@ -70,7 +70,6 @@ void Scene::update(int deltaTime)
 		/*UPDATE PRINCE*/
 		player->update(deltaTime);
 
-
 		/*UPDATE ENEMIES*/
 		for each (Enemy *enemy in enemies) {
 			enemy->update(deltaTime, player[0]);
@@ -84,6 +83,10 @@ void Scene::update(int deltaTime)
 		/*UPDATE SPIKEDOORS*/
 		for each (SpikeDoor *spikeDoor in spikeDoors) {
 			spikeDoor->update(deltaTime, player);
+		}
+
+		if (player->hasFireball) {
+			fireball->update(deltaTime);
 		}
 
 		/*UPDATE CAMARA ORTOGONAL*/
@@ -118,6 +121,7 @@ void Scene::update(int deltaTime)
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
 	else if (state == 1 && nextLevel == true){
+		stopMusic();
 		/*CHANGE STATE*/
 		state = 2;
 
@@ -141,6 +145,7 @@ void Scene::update(int deltaTime)
 
 		/*FIREBALL*/
 		fireball = new Fireball();
+		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
 
 		/*INIT PRINCE*/
 		player = new Player();
@@ -158,8 +163,11 @@ void Scene::update(int deltaTime)
 		initEnemies("levels/level02enemies.txt");
 
 		
+
+		
 	}
 	else if (state == 0 && nextLevel == true){
+		stopMusic();
 		/*CHANGE STATE*/
 		state = 1;
 
@@ -183,6 +191,7 @@ void Scene::update(int deltaTime)
 
 		/*FIREBALL*/
 		fireball = new Fireball();
+		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
 
 		/*INIT PRINCE*/
 		player = new Player();
@@ -218,7 +227,7 @@ void Scene::render()
 		menu->render();
 	}
 	else if (state == 1 || state == 2){
-		stopMusic();
+		//stopMusic();
 		/*MAPA*/
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -235,6 +244,7 @@ void Scene::render()
 
 		/*PRINCE*/
 		player->render();
+
 
 		/*ENEMICS*/
 		for each (Enemy *enemy in enemies){
@@ -262,6 +272,11 @@ void Scene::render()
 
 		/*LIVE*/
 		player->renderLive();
+
+
+		if (player->hasFireball) {
+			fireball->render();
+		}
 	}
 }
 

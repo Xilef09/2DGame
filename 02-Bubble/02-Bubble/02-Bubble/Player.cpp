@@ -254,10 +254,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Fi
  
 void Player::update(int deltaTime)
 {
-	if (hasFireball) {
-		fireball->update(deltaTime);
-		fireball->render();
-	}
 	bool acabada = sprite->update(deltaTime);
 	if (acabada) {
 		switch (sprite->animation())
