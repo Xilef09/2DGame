@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "ShaderProgram.h"
+#include "Fireball.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -15,7 +16,7 @@ class Player
 {
 
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Fireball *fireball);
 	void update(int deltaTime);
 	void render();
 	void renderLive();
@@ -44,6 +45,7 @@ private:
 	float jumpDistance;
 	int lives;
 	ShaderProgram texProgram;
+	Fireball *fireball;
 };
 
 

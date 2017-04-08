@@ -61,7 +61,7 @@ private:
 
 	vector<Fireball *> fireballs;
 
-	Fireball *uniqueFireball;
+	Fireball *fireball;
 
 	sf::Music music;
 

@@ -23,9 +23,11 @@ enum LiveAnims{
 };
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Fireball *fireball)
 {
 	hasFireball = false;
+	this->fireball = fireball;
+	//this->fireball->init(tileMapPos, shaderProgram);
 	lives = 3;
 	direccion = "";
 	bJumping = false;
@@ -252,7 +254,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
  
 void Player::update(int deltaTime)
 {
-	
+	if (hasFireball) {
+		fireball->update(deltaTime);
+		fireball->render();
+	}
 	bool acabada = sprite->update(deltaTime);
 	if (acabada) {
 		switch (sprite->animation())
@@ -277,6 +282,8 @@ void Player::update(int deltaTime)
 				//fireball->render();
 				//fireball->update(deltaTime, this);
 				hasFireball = true;
+				fireball->init(glm::vec2(posPlayer.x, posPlayer.y), texProgram);
+				//fireball->render();
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
 			break;

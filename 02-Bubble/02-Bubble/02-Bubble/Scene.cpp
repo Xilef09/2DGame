@@ -70,6 +70,7 @@ void Scene::update(int deltaTime)
 		/*UPDATE PRINCE*/
 		player->update(deltaTime);
 
+
 		/*UPDATE ENEMIES*/
 		for each (Enemy *enemy in enemies) {
 			enemy->update(deltaTime, player[0]);
@@ -83,11 +84,6 @@ void Scene::update(int deltaTime)
 		/*UPDATE SPIKEDOORS*/
 		for each (SpikeDoor *spikeDoor in spikeDoors) {
 			spikeDoor->update(deltaTime, player);
-		}
-
-		/*UPDATE FIREBALLS*/
-		for each (Fireball *fireball in fireballs) {
-			//fireball->update(deltaTime, player);
 		}
 
 		/*UPDATE CAMARA ORTOGONAL*/
@@ -143,9 +139,12 @@ void Scene::update(int deltaTime)
 		/*INIT MAP COLUMNS*/
 		mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
+		/*FIREBALL*/
+		fireball = new Fireball();
+
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, fireball);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -158,10 +157,6 @@ void Scene::update(int deltaTime)
 		/*INIT ENEMICS*/
 		initEnemies("levels/level02enemies.txt");
 
-		/*INIT FIREBALLS*/
-		uniqueFireball = new Fireball();
-		uniqueFireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
-		fireballs.push_back(uniqueFireball);
 		
 	}
 	else if (state == 0 && nextLevel == true){
@@ -186,9 +181,12 @@ void Scene::update(int deltaTime)
 		/*INIT MAP COLUMNS*/
 		mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
+		/*FIREBALL*/
+		fireball = new Fireball();
+
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, fireball);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -201,10 +199,7 @@ void Scene::update(int deltaTime)
 		/*INIT ENEMICS*/
 		initEnemies("levels/level01enemies.txt");
 
-		/*INIT FIREBALLS*/
-		uniqueFireball = new Fireball();
-		uniqueFireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
-		fireballs.push_back(uniqueFireball);
+		
 	}
 }
 
@@ -254,11 +249,6 @@ void Scene::render()
 		/*TRAMPA PORTA*/
 		for each (SpikeDoor *spikeDoor in spikeDoors) {
 			spikeDoor->render();
-		}
-
-		/*FIREBALLS*/
-		for each (Fireball *fireball in fireballs) {
-			fireball->render();
 		}
 
 		/*COLUMNES*/
