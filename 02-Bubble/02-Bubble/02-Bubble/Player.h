@@ -1,7 +1,7 @@
 #ifndef _PLAYER_INCLUDE
 #define _PLAYER_INCLUDE
 
-
+class Scene;
 #include "Sprite.h"
 #include "TileMap.h"
 #include "ShaderProgram.h"
@@ -16,7 +16,7 @@ class Player
 {
 
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Fireball *fireball);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene, Fireball *fireball);
 	void update(int deltaTime);
 	void render();
 	void renderLive();
@@ -46,6 +46,8 @@ private:
 	int lives;
 	ShaderProgram texProgram;
 	Fireball *fireball;
+
+	Scene *scene;
 };
 
 

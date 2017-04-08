@@ -149,7 +149,7 @@ void Scene::update(int deltaTime)
 
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, fireball);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this, fireball);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -195,7 +195,7 @@ void Scene::update(int deltaTime)
 
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, fireball);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this, fireball);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -442,7 +442,11 @@ bool Scene::initTraps(const string &file) {
 void Scene::playMusic(const string &fileName) {
 	if (!music.openFromFile(fileName))
 		return;
+	if (fileName == "music/walking.ogg") {
+		music.setLoop(true);
+	}
 	music.play();
+	
 	
 }
 

@@ -239,13 +239,17 @@ void Enemy::update(int deltaTime, Player &player)
 		else if (sprite->animation() == ATTACK_LEFT && sprite->getCurrentKeyFrame() == 4 && delayAtac == false){
 			delayAtac = true;
 			player.setLives();
+			scene->playMusic("music/SwordBlow1.ogg");
 			if (player.getLives() == 0)
+				//scene->playMusic("music/DeathScream1.ogg");
 				player.sprite->changeAnimation(23);
 		}
 		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame() == 4 && delayAtac == false){
 			delayAtac = true;
 			player.setLives();
+			scene->playMusic("music/SwordBlow1.ogg");
 			if (player.getLives() == 0)
+				//scene->playMusic("music/DeathScream1.ogg");
 				player.sprite->changeAnimation(24);
 		}
 		else if (sprite->animation() != ATTACK_LEFT && sprite->animation() != ATTACK_RIGHT){

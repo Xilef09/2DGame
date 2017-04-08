@@ -23,8 +23,10 @@ enum LiveAnims{
 };
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Fireball *fireball)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene, Fireball *fireball)
 {
+	this->scene = scene;
+
 	hasFireball = false;
 	this->fireball = fireball;
 	//this->fireball->init(tileMapPos, shaderProgram);
@@ -265,6 +267,7 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(STAND_RIGHT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_LEFT); // 112 shift
 			else sprite->changeAnimation(STAND_LEFT);
+			scene->stopMusic();
 			break;
 		case STAND_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RIGHT);
@@ -282,26 +285,31 @@ void Player::update(int deltaTime)
 				//fireball->render();
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
+			scene->stopMusic();
 			break;
 		case START_MOVING_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(START_MOVING_RIGHT);
 			else sprite->changeAnimation(MOVE_RIGHT);
+			scene->playMusic("music/walking.ogg");
 			break;
 		case START_MOVING_LEFT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(START_MOVING_LEFT);
 			else sprite->changeAnimation(MOVE_LEFT);
+			scene->playMusic("music/walking.ogg");
 			break;
 		case MOVE_LEFT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(CHANGE_DIRECTION_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_LEFT);
 			else sprite->changeAnimation(STAND_LEFT);
+			scene->playMusic("music/walking.ogg");
 			break;
 		case MOVE_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(CHANGE_DIRECTION_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_RIGHT);
 			else sprite->changeAnimation(STAND_RIGHT);
+			scene->playMusic("music/walking.ogg");
 			break;
 		case JUMP_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(MOVE_RIGHT);
@@ -387,7 +395,6 @@ void Player::update(int deltaTime)
 	}
 	*/
 
-	
 	if (sprite->animation() == JUMP_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
 	else if (sprite->animation() == START_MOVING_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
 	else if (sprite->animation() == MOVE_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
