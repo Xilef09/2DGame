@@ -62,7 +62,7 @@ void SpikeDoor::update(int deltaTime, Player* player)
 		}
 	}
 
-	if ((tileMapDispl.y - player->posPlayer.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
+	if ((player->posPlayer.y - tileMapDispl.y) < 2 && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
 		player->isDeadByDoor(true);
 	}
 }

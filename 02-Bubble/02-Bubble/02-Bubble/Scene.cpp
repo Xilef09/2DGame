@@ -85,6 +85,11 @@ void Scene::update(int deltaTime)
 			spikeDoor->update(deltaTime, player);
 		}
 
+		/*UPDATE FIREBALLS*/
+		for each (Fireball *fireball in fireballs) {
+			//fireball->update(deltaTime, player);
+		}
+
 		/*UPDATE CAMARA ORTOGONAL*/
 		glm::ivec2 posicioActual = player->posPlayer;
 		if (((posicioActual[0] + 32) % 320) == 0 && camaraMoguda == false){
@@ -124,6 +129,7 @@ void Scene::update(int deltaTime)
 		spikeDoors.clear();
 		fires.clear();
 		enemies.clear();
+		fireballs.clear();
 
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
@@ -150,6 +156,12 @@ void Scene::update(int deltaTime)
 
 		/*INIT ENEMICS*/
 		initEnemies("levels/level02enemies.txt");
+
+		/*INIT FIREBALLS*/
+		uniqueFireball = new Fireball();
+		uniqueFireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+		fireballs.push_back(uniqueFireball);
+		
 	}
 	else if (state == 0 && nextLevel == true){
 		/*CHANGE STATE*/
@@ -160,6 +172,7 @@ void Scene::update(int deltaTime)
 		spikeDoors.clear();
 		fires.clear();
 		enemies.clear();
+		fireballs.clear();
 
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
@@ -186,6 +199,11 @@ void Scene::update(int deltaTime)
 
 		/*INIT ENEMICS*/
 		initEnemies("levels/level01enemies.txt");
+
+		/*INIT FIREBALLS*/
+		uniqueFireball = new Fireball();
+		uniqueFireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+		fireballs.push_back(uniqueFireball);
 	}
 }
 
@@ -235,6 +253,11 @@ void Scene::render()
 		/*TRAMPA PORTA*/
 		for each (SpikeDoor *spikeDoor in spikeDoors) {
 			spikeDoor->render();
+		}
+
+		/*FIREBALLS*/
+		for each (Fireball *fireball in fireballs) {
+			fireball->render();
 		}
 
 		/*COLUMNES*/

@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "ShaderProgram.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -28,7 +29,7 @@ public:
 
 	glm::ivec2 posPlayer;
 	Sprite *sprite;
-
+	bool hasFireball;
 	
 private:
 	bool bJumping, falling;
@@ -39,6 +40,7 @@ private:
 	string direccion;
 	float jumpDistance;
 	int lives;
+	ShaderProgram texProgram;
 };
 
 

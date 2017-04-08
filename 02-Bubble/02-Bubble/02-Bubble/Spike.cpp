@@ -27,7 +27,16 @@ void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 	sprite->setAnimationSpeed(FULL_VISIBLE, 8);
 	sprite->addKeyframe(FULL_VISIBLE, glm::vec2(0.3f, 0.0f));
+	
+	/*spritesheet.loadFromFile("images/fireballSpriteSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(1);
 
+	sprite->setAnimationSpeed(NOTHING, 8);
+	sprite->addKeyframe(NOTHING, glm::vec2(0.1f, 0.0f));
+	sprite->addKeyframe(NOTHING, glm::vec2(0.2f, 0.0f));
+	sprite->addKeyframe(NOTHING, glm::vec2(0.3f, 0.0f));
+	*/
 	sprite->changeAnimation(NOTHING);
 	tileMapDispl = tileMapPos;
 	//investigar com agafar trap position
@@ -44,7 +53,7 @@ void Spike::update(int deltaTime, Player *player)
 		switch (sprite->animation())
 		{
 		case NOTHING:
-			if ((tileMapDispl.y - player->posPlayer.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0) {
+			if ((player->posPlayer.y - tileMapDispl.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
 				player->isDead(true);
 			}
@@ -60,6 +69,7 @@ void Spike::update(int deltaTime, Player *player)
 		break;
 		}
 	}
+	
 	/*
 	if ((tileMapDispl.y - player.posPlayer.y) < 64 && (player.posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() == NOTHING) {
 		sprite->changeAnimation(FULL_VISIBLE);

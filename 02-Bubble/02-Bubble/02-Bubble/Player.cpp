@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Game.h"
 
-
 #define JUMP_ANGLE_STEP 2
 #define JUMP_HEIGHT 65
 #define FALL_STEP 4
@@ -22,6 +21,7 @@ enum PlayerAnims
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	hasFireball = false;
 	lives = 3;
 	direccion = "";
 	bJumping = false;
@@ -243,6 +243,13 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(STAND_LEFT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_RIGHT); // 112 shift
+			else if (Game::instance().getSpecialKey(GLUT_KEY_F8)) {
+				//fireball = new Fireball();
+				//fireball->init(glm::ivec2(posPlayer.x, posPlayer.y), texProgram);
+				//fireball->render();
+				//fireball->update(deltaTime, this);
+				hasFireball = true;
+			}
 			else sprite->changeAnimation(STAND_RIGHT);
 			break;
 		case START_MOVING_RIGHT:
@@ -336,7 +343,6 @@ void Player::update(int deltaTime)
 			break;
 		}
 	}
-	
 	/*
 	if (sprite->animation() == JUMP_LEFT || sprite->animation() == START_MOVING_LEFT || sprite->animation() == MOVE_LEFT || sprite->animation() == JUMP_RUN_LEFT ||
 		sprite->animation() == CHANGE_DIRECTION_RIGHT) {

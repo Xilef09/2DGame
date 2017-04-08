@@ -14,6 +14,7 @@
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />

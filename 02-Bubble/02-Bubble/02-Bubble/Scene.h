@@ -12,6 +12,7 @@
 #include "SpikeDoor.h"
 #include "Fire.h"
 #include "Menu.h"
+#include "Fireball.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -57,6 +58,10 @@ private:
 	vector<SpikeDoor *> spikeDoors;
 	vector<Fire *> fires;
 	vector<Enemy *> enemies;
+
+	vector<Fireball *> fireballs;
+
+	Fireball *uniqueFireball;
 
 	sf::Music music;
 
