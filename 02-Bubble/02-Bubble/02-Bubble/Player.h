@@ -42,7 +42,7 @@ private:
 	int jumpAngle, startY;
 	Texture spritesheet, spritesheet1Live, spritesheet2Live, spritesheet3Live, spritesheetGameOver, spritesheetFireball;
 	TileMap *map;
-	string direccion;
+	string direccion, fireballDirection;
 	float jumpDistance;
 	int lives;
 	ShaderProgram texProgram;

@@ -289,23 +289,36 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
 void Player::update(int deltaTime)
 {
 	bool fireballAcabada = spriteFireball->update(deltaTime);
-	if (fireballAcabada && hasFireball) {
-		spriteFireball->changeAnimation(MOVING_RIGHT);
+	if (fireballAcabada) {
+		if (hasFireball && fireballDirection == "RIGHT")
+			spriteFireball->changeAnimation(MOVING_RIGHT);
+		else if (hasFireball && fireballDirection == "LEFT")
+			spriteFireball->changeAnimation(MOVING_LEFT);
+		else 
+			spriteFireball->changeAnimation(NOTHING);
 	}
 	bool acabada = sprite->update(deltaTime);
 	if (acabada) {
 		switch (sprite->animation())
 		{
 		case STAND_LEFT:
+			direccion = "LEFT";
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(START_MOVING_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(STAND_RIGHT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_LEFT); // 112 shift
+			else if (Game::instance().getSpecialKey(GLUT_KEY_F8)) {
+				hasFireball = true;
+				posFireball.x = posPlayer.x - 32.0f;
+				posFireball.y = posPlayer.y + 10.0f;
+				fireballDirection = "LEFT";
+			}
 			else sprite->changeAnimation(STAND_LEFT);
 			scene->stopMusic();
 			break;
 		case STAND_RIGHT:
+			direccion = "RIGHT";
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(START_MOVING_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_RIGHT);
@@ -315,6 +328,7 @@ void Player::update(int deltaTime)
 				hasFireball = true;
 				posFireball.x = posPlayer.x + 32.0f;
 				posFireball.y = posPlayer.y + 10.0f;
+				fireballDirection = "RIGHT";
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
 			scene->stopMusic();
@@ -448,6 +462,17 @@ void Player::update(int deltaTime)
 		posPlayer.x -= 2; // igual que en el caso anterior
 	}
 	
+	/*FIREBALL collisions*/
+	if (spriteFireball->animation() == MOVING_RIGHT && map->collisionMoveRight(posFireball, glm::ivec2(50, 64))) {
+		hasFireball = false;
+		fireballDirection = "";
+	}
+	else if (spriteFireball->animation() == MOVING_LEFT && map->collisionMoveLeft(posFireball, glm::ivec2(50, 64))) {
+		hasFireball = false;
+		fireballDirection = "";
+	}
+
+
 	if(bJumping)
 	{		
 		jumpAngle += JUMP_ANGLE_STEP;
@@ -483,7 +508,8 @@ void Player::update(int deltaTime)
 	else if (lives == 0) spriteLive->changeSpitesheet(&spritesheetGameOver);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if (hasFireball) {
-		posFireball.x += 1.0f;
+		if (fireballDirection == "LEFT") posFireball.x -= 1.0f;
+		else posFireball.x += 1.0f;
 		spriteFireball->setPosition(glm::vec2(float(tileMapDispl.x + posFireball.x), float(tileMapDispl.y + posFireball.y)));
 	}
 }
