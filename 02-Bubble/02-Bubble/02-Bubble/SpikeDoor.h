@@ -1,13 +1,14 @@
 #ifndef _SPIKEDOOR_INCLUDE
 #define _SPIKEDOOR_INCLUDE
 
+class Scene;
 #include "Sprite.h"
 #include "Player.h"
 
 class SpikeDoor
 {
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene);
 	void update(int deltaTime, Player *player);
 	void render();
 
@@ -23,6 +24,8 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	Player *player;
+
+	Scene *scene;
 
 };
 

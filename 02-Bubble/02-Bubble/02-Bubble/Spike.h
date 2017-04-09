@@ -1,13 +1,14 @@
 #ifndef _SPIKE_INCLUDE
 #define _SPIKE_INCLUDE
 
+class Scene;
 #include "Sprite.h"
 #include "Player.h"
 
 class Spike
 {
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene);
 	void update(int deltaTime, Player *player);
 	void render();
 
@@ -21,6 +22,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Scene *scene;
 	
 };
 

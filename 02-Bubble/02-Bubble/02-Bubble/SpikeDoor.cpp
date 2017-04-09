@@ -9,9 +9,9 @@ enum PlayerAnims
 	NOTHING, ALMOST_NOTHING, HALF_VISIBLE, FULL_VISIBLE
 };
 
-void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene)
 {
-
+	this->scene = scene;
 	spritesheet.loadFromFile("images/Traps.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);

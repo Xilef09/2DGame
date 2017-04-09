@@ -395,14 +395,14 @@ bool Scene::initTraps(const string &file) {
 			if (stoi(tile) == 1) 
 			{ //spike
 				spike = new Spike();
-				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram);
+				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram, this);
 				spikes.push_back(spike);
 			}
 			else if (stoi(tile) == 2)
 			{
 				//porta
 				spikeDoor = new SpikeDoor();
-				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-64.0f), texProgram);
+				spikeDoor->init(glm::ivec2(i*map->getTileSizeX()+14.0f, j*(map->getTileSizeY())-64.0f), texProgram, this);
 				spikeDoors.push_back(spikeDoor);
 			}
 			else if (stoi(tile) == 3)

@@ -9,9 +9,9 @@ enum PlayerAnims
 	NOTHING, ALMOST_NOTHING, HALF_VISIBLE, FULL_VISIBLE
 };
 
-void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Spike::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene)
 {
-	
+	this->scene = scene;
 	spritesheet.loadFromFile("images/Traps.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -59,9 +59,10 @@ void Spike::update(int deltaTime, Player *player)
 		switch (sprite->animation())
 		{
 		case NOTHING:
-			if ((player->posPlayer.y - tileMapDispl.y) < 64 && (player->posPlayer.x - tileMapDispl.x) == 0) {
+			if ((player->posPlayer.y - tileMapDispl.y) < 32 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
 				player->isDead(true);
+				scene->playSound("music/spikes.ogg");
 			}
 		break;
 		case ALMOST_NOTHING:
