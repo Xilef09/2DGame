@@ -85,9 +85,11 @@ void Scene::update(int deltaTime)
 			spikeDoor->update(deltaTime, player);
 		}
 
+		/*
 		if (player->hasFireball) {
 			fireball->update(deltaTime);
 		}
+		*/
 
 		/*UPDATE CAMARA ORTOGONAL*/
 		glm::ivec2 posicioActual = player->posPlayer;
@@ -130,7 +132,6 @@ void Scene::update(int deltaTime)
 		spikeDoors.clear();
 		fires.clear();
 		enemies.clear();
-		fireballs.clear();
 
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
@@ -143,13 +144,14 @@ void Scene::update(int deltaTime)
 		/*INIT MAP COLUMNS*/
 		mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-		/*FIREBALL*/
+		/*FIREBALL
 		fireball = new Fireball();
 		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+		*/
 
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this, fireball);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -176,7 +178,6 @@ void Scene::update(int deltaTime)
 		spikeDoors.clear();
 		fires.clear();
 		enemies.clear();
-		fireballs.clear();
 
 		/*INIT LEVEL02*/
 		/*CHANGE CAMARA POSITION*/
@@ -189,13 +190,14 @@ void Scene::update(int deltaTime)
 		/*INIT MAP COLUMNS*/
 		mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-		/*FIREBALL*/
+		/*FIREBALL
 		fireball = new Fireball();
 		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+		*/
 
 		/*INIT PRINCE*/
 		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this, fireball);
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
 		player->setTileMap(map);
 
@@ -273,9 +275,8 @@ void Scene::render()
 		/*LIVE*/
 		player->renderLive();
 
-
 		if (player->hasFireball) {
-			fireball->render();
+			player->renderFireball();
 		}
 	}
 }

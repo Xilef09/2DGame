@@ -5,7 +5,6 @@ class Scene;
 #include "Sprite.h"
 #include "TileMap.h"
 #include "ShaderProgram.h"
-#include "Fireball.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -16,10 +15,11 @@ class Player
 {
 
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene, Fireball *fireball);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene);
 	void update(int deltaTime);
 	void render();
 	void renderLive();
+	void renderFireball();
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
@@ -31,22 +31,21 @@ public:
 	int getLives();
 
 	glm::ivec2 posPlayer;
+	glm::ivec2 posFireball;
 	bool hasFireball;
-	Sprite *sprite, *spriteLive;
+	Sprite *sprite, *spriteLive, *spriteFireball;
 
 	
 private:
 	bool bJumping, falling;
 	glm::ivec2 tileMapDispl;
 	int jumpAngle, startY;
-	Texture spritesheet, spritesheet1Live, spritesheet2Live, spritesheet3Live, spritesheetGameOver;
+	Texture spritesheet, spritesheet1Live, spritesheet2Live, spritesheet3Live, spritesheetGameOver, spritesheetFireball;
 	TileMap *map;
 	string direccion;
 	float jumpDistance;
 	int lives;
 	ShaderProgram texProgram;
-	Fireball *fireball;
-
 	Scene *scene;
 };
 

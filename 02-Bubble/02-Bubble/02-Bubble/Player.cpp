@@ -22,13 +22,17 @@ enum LiveAnims{
 	LIVES
 };
 
+enum FireballAnims {
+	NOTHING, MOVING_RIGHT, MOVING_LEFT
+};
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene, Fireball *fireball)
+
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene *scene)
 {
 	this->scene = scene;
 
 	hasFireball = false;
-	this->fireball = fireball;
+	//this->fireball = fireball;
 	//this->fireball->init(tileMapPos, shaderProgram);
 	lives = 3;
 	direccion = "";
@@ -55,6 +59,34 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
 
 	spriteLive->changeAnimation(LIVES);
 	spriteLive->setPosition(glm::vec2(0.f, 320.f));
+
+	//Fireball
+	spritesheetFireball.setWrapS(GL_MIRRORED_REPEAT);
+	spritesheetFireball.loadFromFile("images/fireballSpriteSheet.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteFireball = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheetFireball, &shaderProgram);
+	spriteFireball->setNumberAnimations(3);
+
+	spriteFireball->setAnimationSpeed(NOTHING, 8);
+	spriteFireball->addKeyframe(NOTHING, glm::vec2(0.9f, 0.0f));
+
+	spriteFireball->setAnimationSpeed(MOVING_RIGHT, 8);
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.1f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.2f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.3f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.4f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.5f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_RIGHT, glm::vec2(0.6f, 0.0f));
+
+	spriteFireball->setAnimationSpeed(MOVING_LEFT, 8);
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.1f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.2f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.3f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.4f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.5f, 0.0f));
+	spriteFireball->addKeyframe(MOVING_LEFT, glm::vec2(-0.6f, 0.0f));
+
+	spriteFireball->changeAnimation(NOTHING);
+	spriteFireball->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 
 	//Player sprites
 	spritesheet.setWrapS(GL_MIRRORED_REPEAT);
@@ -256,6 +288,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
  
 void Player::update(int deltaTime)
 {
+	bool fireballAcabada = spriteFireball->update(deltaTime);
+	if (fireballAcabada && hasFireball) {
+		spriteFireball->changeAnimation(MOVING_RIGHT);
+	}
 	bool acabada = sprite->update(deltaTime);
 	if (acabada) {
 		switch (sprite->animation())
@@ -276,13 +312,9 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(STAND_LEFT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_RIGHT); // 112 shift
 			else if (Game::instance().getSpecialKey(GLUT_KEY_F8)) {
-				//fireball = new Fireball();
-				//fireball->init(glm::ivec2(posPlayer.x, posPlayer.y), texProgram);
-				//fireball->render();
-				//fireball->update(deltaTime, this);
 				hasFireball = true;
-				fireball->init(glm::vec2(posPlayer.x, posPlayer.y), texProgram);
-				//fireball->render();
+				posFireball.x = posPlayer.x + 32.0f;
+				posFireball.y = posPlayer.y + 10.0f;
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
 			scene->stopMusic();
@@ -450,6 +482,10 @@ void Player::update(int deltaTime)
 	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
 	else if (lives == 0) spriteLive->changeSpitesheet(&spritesheetGameOver);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if (hasFireball) {
+		posFireball.x += 1.0f;
+		spriteFireball->setPosition(glm::vec2(float(tileMapDispl.x + posFireball.x), float(tileMapDispl.y + posFireball.y)));
+	}
 }
 
 void Player::render()
@@ -461,6 +497,10 @@ void Player::renderLive(){
 	spriteLive->render();
 }
 
+void Player::renderFireball() {
+	spriteFireball->render();
+}
+
 void Player::setTileMap(TileMap *tileMap)
 {
 	map = tileMap;
@@ -470,6 +510,8 @@ void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+
+	spriteFireball->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::isDead(bool isDead) {
