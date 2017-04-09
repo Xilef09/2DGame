@@ -315,7 +315,7 @@ void Player::update(int deltaTime)
 				fireballDirection = "LEFT";
 			}
 			else sprite->changeAnimation(STAND_LEFT);
-			scene->stopMusic();
+			scene->stopSound();
 			break;
 		case STAND_RIGHT:
 			direccion = "RIGHT";
@@ -331,31 +331,31 @@ void Player::update(int deltaTime)
 				fireballDirection = "RIGHT";
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
-			scene->stopMusic();
+			scene->stopSound();
 			break;
 		case START_MOVING_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(START_MOVING_RIGHT);
 			else sprite->changeAnimation(MOVE_RIGHT);
-			scene->playMusic("music/walking.ogg");
+			scene->playSound("music/walking.ogg");
 			break;
 		case START_MOVING_LEFT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(START_MOVING_LEFT);
 			else sprite->changeAnimation(MOVE_LEFT);
-			scene->playMusic("music/walking.ogg");
+			scene->playSound("music/walking.ogg");
 			break;
 		case MOVE_LEFT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(CHANGE_DIRECTION_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_LEFT);
 			else sprite->changeAnimation(STAND_LEFT);
-			scene->playMusic("music/walking.ogg");
+			scene->playSound("music/walking.ogg");
 			break;
 		case MOVE_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(CHANGE_DIRECTION_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_RUN_RIGHT);
 			else sprite->changeAnimation(STAND_RIGHT);
-			scene->playMusic("music/walking.ogg");
+			scene->playSound("music/walking.ogg");
 			break;
 		case JUMP_RIGHT:
 			if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(MOVE_RIGHT);

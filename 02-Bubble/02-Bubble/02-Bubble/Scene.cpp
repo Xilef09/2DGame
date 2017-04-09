@@ -229,7 +229,6 @@ void Scene::render()
 		menu->render();
 	}
 	else if (state == 1 || state == 2){
-		//stopMusic();
 		/*MAPA*/
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -441,11 +440,10 @@ bool Scene::initTraps(const string &file) {
 }
 
 void Scene::playMusic(const string &fileName) {
+	
 	if (!music.openFromFile(fileName))
 		return;
-	if (fileName == "music/walking.ogg") {
-		music.setLoop(true);
-	}
+	
 	music.play();
 	
 	
@@ -455,4 +453,18 @@ void Scene::stopMusic() {
 	music.stop();
 }
 
+void Scene::playSound(const string &fileName) {
+	if (!buffer.loadFromFile(fileName))
+		return;
+
+	sound.setBuffer(buffer);
+	if (fileName == "music/walking.ogg") {
+		sound.setLoop(true);
+	}
+	sound.play();
+}
+
+void Scene::stopSound() {
+	sound.stop();
+}
 

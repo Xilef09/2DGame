@@ -32,7 +32,8 @@ public:
 	bool initTraps(const string &file);
 	void playMusic(const string &fileName);
 	void stopMusic();
-
+	void playSound(const string &fileName);
+	void stopSound();
 	
 
 private:
@@ -59,6 +60,8 @@ private:
 	vector<Enemy *> enemies;
 
 	sf::Music music;
+	sf::Sound sound;
+	sf::SoundBuffer buffer;
 
 	int state;
 };
