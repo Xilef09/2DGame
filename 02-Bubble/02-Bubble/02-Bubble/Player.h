@@ -43,7 +43,7 @@ private:
 	Texture spritesheet, spritesheet1Live, spritesheet2Live, spritesheet3Live, spritesheetGameOver, spritesheetFireball;
 	TileMap *map;
 	string direccion, fireballDirection;
-	float jumpDistance;
+	float jumpDistance, jumpHeight;
 	int lives;
 	ShaderProgram texProgram;
 	Scene *scene;
