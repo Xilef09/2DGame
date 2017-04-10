@@ -9,15 +9,21 @@ enum FireAnims
 	MENU
 };
 
-void Menu::init(ShaderProgram &shaderProgram){
-
-	state = 0;
+void Menu::init(ShaderProgram &shaderProgram, string pantalla){
 
 	//Menu background
 	spritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheetinst.loadFromFile("images/instructions.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheetcred.loadFromFile("images/credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(320, 202), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+	if (pantalla.compare(0, 7, "credits") == 0){
+		state = 2;
+		sprite = Sprite::createSprite(glm::ivec2(320, 202), glm::vec2(1, 1), &spritesheetcred, &shaderProgram);
+	}
+	else{
+		state = 0;
+		sprite = Sprite::createSprite(glm::ivec2(320, 202), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+	}
+
 	sprite->setNumberAnimations(1);
 
 	sprite->setAnimationSpeed(MENU , 8);

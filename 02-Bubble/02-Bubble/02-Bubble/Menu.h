@@ -8,7 +8,7 @@
 class Menu
 {
 public:
-	void init(ShaderProgram &shaderProgram);
+	void init(ShaderProgram &shaderProgram, string pantalla);
 	bool update(int deltaTime);
 	void render();
 

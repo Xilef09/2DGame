@@ -34,6 +34,8 @@ public:
 	void stopMusic();
 	void playSound(const string &fileName);
 	void stopSound();
+
+	bool nextLevel2 = false;
 	
 
 private:

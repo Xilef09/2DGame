@@ -42,7 +42,7 @@ void Scene::init()
 
 	/*MENU*/
 	menu = new Menu();
-	menu->init(texProgram);
+	menu->init(texProgram,"inici");
 
 	/*INIT CAMARA ORTOGONAL*/
 	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
@@ -60,7 +60,7 @@ void Scene::update(int deltaTime)
 
 	bool nextLevel = menu->update(deltaTime);
 
-	if ((state == 2 || state == 1) && nextLevel == false){
+	if ((state == 2 || state == 1) && nextLevel == false && nextLevel2 == false){
 
 		/*UPDATE FIRE*/
 		for each (Fire *fire in fires) {
@@ -112,17 +112,23 @@ void Scene::update(int deltaTime)
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 		player->setLivePosition(glm::vec2(camaraX,camaraY+192));
 	}
-	else if (state == 2 && nextLevel == true){
+	else if (state == 2 && (nextLevel == true || nextLevel2 == true)){
+
+		nextLevel2 = false;
+
 		/*CHANGE STATE*/
 		state = 0;
 		menu = new Menu();
-		menu->init(texProgram);
+		menu->init(texProgram, "credits");
 
 		camaraY = 0.f;
 		camaraX = 0.f;
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
-	else if (state == 1 && nextLevel == true){
+	else if (state == 1 && (nextLevel == true || nextLevel2 == true)){
+
+		nextLevel2 = false;
+
 		stopMusic();
 		/*CHANGE STATE*/
 		state = 2;
