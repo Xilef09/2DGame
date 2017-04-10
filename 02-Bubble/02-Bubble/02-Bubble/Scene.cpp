@@ -440,13 +440,13 @@ bool Scene::initTraps(const string &file) {
 }
 
 void Scene::playMusic(const string &fileName) {
-	
-	if (!music.openFromFile(fileName))
-		return;
-	
-	music.play();
-	
-	
+	sf::SoundSource::Status status = music.getStatus();
+	if (status != 2) {
+		if (!music.openFromFile(fileName))
+			return;
+
+		music.play();
+	}
 }
 
 void Scene::stopMusic() {

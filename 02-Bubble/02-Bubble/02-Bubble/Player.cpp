@@ -474,7 +474,7 @@ void Player::update(int deltaTime)
 
 
 	if(bJumping)
-	{		
+	{	
 		jumpAngle += JUMP_ANGLE_STEP;
 		if(jumpAngle == 180)
 		{
@@ -511,6 +511,11 @@ void Player::update(int deltaTime)
 		if (fireballDirection == "LEFT") posFireball.x -= 1.0f;
 		else posFireball.x += 1.0f;
 		spriteFireball->setPosition(glm::vec2(float(tileMapDispl.x + posFireball.x), float(tileMapDispl.y + posFireball.y)));
+	}
+	//28 i 29 tiles puerta
+	if (map->collisionWithFinalDoor(posPlayer, glm::ivec2(32, 64))) {
+		int x = 0;
+		scene->playMusic("music/intro_theme.ogg"); // change for win sound
 	}
 }
 
