@@ -227,11 +227,11 @@ void Enemy::update(int deltaTime, Player &player)
 		}
 
 		if (sprite->animation() == MOVE_RIGHT){
-			posEnemy.x += 1;
+			posEnemy.x += 0.5;
 			delayAtac = false;
 		}
 		else if (sprite->animation() == MOVE_LEFT){
-			posEnemy.x -= 1;
+			posEnemy.x -= 0.5;
 			delayAtac = false;
 		}
 
