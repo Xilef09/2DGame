@@ -117,6 +117,9 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, str
 
 void Enemy::update(int deltaTime, Player &player)
 {
+	glm::vec2 posFire;
+	player.spriteFireball->getPosition(posFire);
+
 	if ((((player.posPlayer.x - posEnemy.x) < 50 && (player.posPlayer.x - posEnemy.x) >= 0 && posEnemy[1] == player.posPlayer.y) &&
 		player.sprite->getCurrentKeyFrame() == 5 && player.sprite->animation() == 17) && sprite->animation()!=DISAPEAR){
 		if (direccion.compare(0, 5, "right"))
@@ -133,7 +136,13 @@ void Enemy::update(int deltaTime, Player &player)
 		else
 			sprite->changeAnimation(DEAD_RIGHT);
 		scene->playMusic("music/guard_death.ogg");
-
+	}
+	else if ((posFire.x == posEnemy.x && posFire.y == (posEnemy.y + 10) && sprite->animation() != DISAPEAR)){
+		if (direccion.compare(0, 5, "right"))
+			sprite->changeAnimation(DEAD_LEFT);
+		else
+			sprite->changeAnimation(DEAD_RIGHT);
+		scene->playMusic("music/DeathScream1.ogg");
 	}
 	else{
 		bool acabada = sprite->update(deltaTime);
