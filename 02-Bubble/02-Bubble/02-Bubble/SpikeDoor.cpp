@@ -16,16 +16,16 @@ void SpikeDoor::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram,
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.1, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
 
-	sprite->setAnimationSpeed(NOTHING, 8);
+	sprite->setAnimationSpeed(NOTHING, 2);
 	sprite->addKeyframe(NOTHING, glm::vec2(0.4f, 0.0f));
 
-	sprite->setAnimationSpeed(ALMOST_NOTHING, 8);
+	sprite->setAnimationSpeed(ALMOST_NOTHING, 2);
 	sprite->addKeyframe(ALMOST_NOTHING, glm::vec2(0.1f, 0.1f));
 
-	sprite->setAnimationSpeed(HALF_VISIBLE, 8);
+	sprite->setAnimationSpeed(HALF_VISIBLE, 2);
 	sprite->addKeyframe(HALF_VISIBLE, glm::vec2(0.2f, 0.1f));
 
-	sprite->setAnimationSpeed(FULL_VISIBLE, 8);
+	sprite->setAnimationSpeed(FULL_VISIBLE, 2);
 	sprite->addKeyframe(FULL_VISIBLE, glm::vec2(0.3f, 0.1f));
 
 	this->player = player;
@@ -62,7 +62,7 @@ void SpikeDoor::update(int deltaTime, Player* player)
 		}
 	}
 
-	if ((player->posPlayer.y - tileMapDispl.y) < 2 && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
+	if (player->posPlayer.y == tileMapDispl.y && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
 		player->isDeadByDoor(true);
 	}
 }
