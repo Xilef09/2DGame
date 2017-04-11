@@ -171,7 +171,19 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 	x1 = (pos.x + size.x - 1) / tileSizeX;
 	y = (pos.y +1 + size.y - 1) / tileSizeY;
 
-
+	if (map[(y)*mapSize.x + x0 + 1] != 1
+		&& map[(y)*mapSize.x + x0 +1] != 2
+		&& map[(y)*mapSize.x + x0+1] != 14
+		&& map[(y)*mapSize.x + x0+1] != 37
+		&& map[(y)*mapSize.x + x0 + 1] != 12
+		&& map[(y)*mapSize.x + x0 + 1] != 13
+		&& map[(y)*mapSize.x + x0 + 1] != 19
+		&& map[(y)*mapSize.x + x0 + 1] != 20
+		&& map[(y)*mapSize.x + x0 + 1] != 27
+		&& map[(y)*mapSize.x + x0 + 1] != 40){
+		return true;
+	}
+	/*
 	if (map[(y-1)*mapSize.x + x0] != 1 && map[(y-1)*mapSize.x + x0] != 2 && map[(y-1)*mapSize.x + x0] != 12 
 		&& map[(y-1)*mapSize.x + x0] != 13 && map[(y-1)*mapSize.x + x0] != 14 && map[(y-1)*mapSize.x + x0] != 17
 		&& map[(y-1)*mapSize.x + x0] != 19 && map[(y-1)*mapSize.x + x0] != 20 && map[(y-1)*mapSize.x + x0] != 27
@@ -179,7 +191,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 		&& map[(y-1)*mapSize.x + x0] != 34 && map[(y-1)*mapSize.x + x0] != 40 && map[(y-1)*mapSize.x + x0] != 41)
 	{
 		return true;
-	}
+	}*/
 	return false;
 }
 
@@ -272,7 +284,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 			|| map[(y)*mapSize.x + x + 1] == 17
 			|| map[(y)*mapSize.x + x + 1] == 27
 			|| map[(y)*mapSize.x + x + 1] == 40)
-			&& pos.x % tileSizeX > 6){
+			&& pos.x % tileSizeX > 16){
 			return false;
 		}
 		else if (map[(y)*mapSize.x + x + 1] != 1 
