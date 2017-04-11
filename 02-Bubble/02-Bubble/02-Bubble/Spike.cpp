@@ -61,6 +61,7 @@ void Spike::update(int deltaTime, Player *player)
 		case NOTHING:
 			if ((tileMapDispl.y - player->posPlayer.y) < 10 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
+				player->setLives();
 				player->isDead(true);
 				scene->playSound("music/spikes.ogg");
 			}
