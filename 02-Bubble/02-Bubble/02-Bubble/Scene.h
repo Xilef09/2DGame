@@ -36,6 +36,7 @@ public:
 	void stopSound();
 
 	bool nextLevel2 = false;
+	bool resetLevel = false;
 	
 
 private:

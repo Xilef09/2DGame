@@ -60,7 +60,7 @@ void Scene::update(int deltaTime)
 
 	bool nextLevel = menu->update(deltaTime);
 
-	if ((state == 2 || state == 1) && nextLevel == false && nextLevel2 == false){
+	if ((state == 2 || state == 1) && nextLevel == false && nextLevel2 == false && resetLevel == false){
 
 		/*UPDATE FIRE*/
 		for each (Fire *fire in fires) {
@@ -112,9 +112,10 @@ void Scene::update(int deltaTime)
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 		player->setLivePosition(glm::vec2(camaraX,camaraY+192));
 	}
-	else if (state == 2 && (nextLevel == true || nextLevel2 == true)){
+	else if (state == 2 && ((nextLevel == true || nextLevel2 == true) || resetLevel == true)){
 
 		nextLevel2 = false;
+		resetLevel = false;
 
 		/*CHANGE STATE*/
 		state = 0;
@@ -125,9 +126,10 @@ void Scene::update(int deltaTime)
 		camaraX = 0.f;
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 	}
-	else if (state == 1 && (nextLevel == true || nextLevel2 == true)){
+	else if (state == 1 && (nextLevel == true || nextLevel2 == true || resetLevel == true)){
 
 		nextLevel2 = false;
+		resetLevel = false;
 
 		stopMusic();
 		/*CHANGE STATE*/
@@ -168,11 +170,7 @@ void Scene::update(int deltaTime)
 		initTraps("levels/level02torxes.txt");
 
 		/*INIT ENEMICS*/
-		initEnemies("levels/level02enemies.txt");
-
-		
-
-		
+		initEnemies("levels/level02enemies.txt");		
 	}
 	else if (state == 0 && nextLevel == true){
 		stopMusic();
