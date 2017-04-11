@@ -60,7 +60,7 @@ void Scene::update(int deltaTime)
 
 	bool nextLevel = menu->update(deltaTime);
 
-	if ((state == 2 || state == 1) && nextLevel == false && nextLevel2 == false && resetLevel == false){
+	if ((state == 2 || state == 1) && nextLevel == false && nextLevel2 == false){
 
 		/*UPDATE FIRE*/
 		for each (Fire *fire in fires) {
@@ -112,109 +112,14 @@ void Scene::update(int deltaTime)
 		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
 		player->setLivePosition(glm::vec2(camaraX,camaraY+192));
 	}
-	else if (state == 2 && ((nextLevel == true || nextLevel2 == true) || resetLevel == true)){
-
-		nextLevel2 = false;
-		resetLevel = false;
-
-		/*CHANGE STATE*/
-		state = 0;
-		menu = new Menu();
-		menu->init(texProgram, "credits");
-
-		camaraY = 0.f;
-		camaraX = 0.f;
-		projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
+	else if (state == 2 && ((nextLevel == true || nextLevel2 == true))){
+		changeToCredits();
 	}
-	else if (state == 1 && (nextLevel == true || nextLevel2 == true || resetLevel == true)){
-
-		nextLevel2 = false;
-		resetLevel = false;
-
-		stopMusic();
-		/*CHANGE STATE*/
-		state = 2;
-
-		/*CLEAR LEVEL 01 SPRIES*/
-		spikes.clear();
-		spikeDoors.clear();
-		fires.clear();
-		enemies.clear();
-
-		/*INIT LEVEL02*/
-		/*CHANGE CAMARA POSITION*/
-		camaraY = 128.f;
-		camaraX = 0.f;
-
-		/*INIT MAP*/
-		map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		/*INIT MAP COLUMNS*/
-		mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		/*FIREBALL
-		fireball = new Fireball();
-		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
-		*/
-
-		/*INIT PRINCE*/
-		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
-		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
-		player->setTileMap(map);
-
-		/*INIT TRAPS*/
-		initTraps("levels/level02traps.txt");
-
-		/*INIT TOXES*/
-		initTraps("levels/level02torxes.txt");
-
-		/*INIT ENEMICS*/
-		initEnemies("levels/level02enemies.txt");		
+	else if (state == 1 && (nextLevel == true || nextLevel2 == true)){
+		changeToLevel02();
 	}
 	else if (state == 0 && nextLevel == true){
-		stopMusic();
-		/*CHANGE STATE*/
-		state = 1;
-
-		/*CLEAR LEVEL 01 SPRIES*/
-		spikes.clear();
-		spikeDoors.clear();
-		fires.clear();
-		enemies.clear();
-
-		/*INIT LEVEL02*/
-		/*CHANGE CAMARA POSITION*/
-		camaraY = 128.f;
-		camaraX = 0.f;
-
-		/*INIT MAP*/
-		map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		/*INIT MAP COLUMNS*/
-		mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		/*FIREBALL
-		fireball = new Fireball();
-		//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
-		*/
-
-		/*INIT PRINCE*/
-		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
-		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
-		player->setTileMap(map);
-
-		/*INIT TRAPS*/
-		initTraps("levels/level01traps.txt");
-
-		/*INIT TOXES*/
-		initTraps("levels/level01torxes.txt");
-
-		/*INIT ENEMICS*/
-		initEnemies("levels/level01enemies.txt");
-
-		
+		changeToLevel01();
 	}
 }
 
@@ -471,5 +376,114 @@ void Scene::playSound(const string &fileName) {
 
 void Scene::stopSound() {
 	sound.stop();
+}
+
+void Scene::changeToLevel01() {
+	stopMusic();
+	/*CHANGE STATE*/
+	state = 1;
+
+	/*CLEAR LEVEL 01 SPRIES*/
+	spikes.clear();
+	spikeDoors.clear();
+	fires.clear();
+	enemies.clear();
+
+	/*INIT LEVEL02*/
+	/*CHANGE CAMARA POSITION*/
+	camaraY = 128.f;
+	camaraX = 0.f;
+
+	/*INIT MAP*/
+	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	/*INIT MAP COLUMNS*/
+	mapColumns = TileMap::createTileMap("levels/level01columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	/*FIREBALL
+	fireball = new Fireball();
+	//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+	*/
+
+	/*INIT PRINCE*/
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+	player->setTileMap(map);
+
+	/*INIT TRAPS*/
+	initTraps("levels/level01traps.txt");
+
+	/*INIT TOXES*/
+	initTraps("levels/level01torxes.txt");
+
+	/*INIT ENEMICS*/
+	initEnemies("levels/level01enemies.txt");
+
+
+}
+
+void Scene::changeToLevel02() {
+
+	nextLevel2 = false;
+
+
+	stopMusic();
+	/*CHANGE STATE*/
+	state = 2;
+
+	/*CLEAR LEVEL 01 SPRIES*/
+	spikes.clear();
+	spikeDoors.clear();
+	fires.clear();
+	enemies.clear();
+
+	/*INIT LEVEL02*/
+	/*CHANGE CAMARA POSITION*/
+	camaraY = 128.f;
+	camaraX = 0.f;
+
+	/*INIT MAP*/
+	map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	/*INIT MAP COLUMNS*/
+	mapColumns = TileMap::createTileMap("levels/level02columns.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	/*FIREBALL
+	fireball = new Fireball();
+	//fireball->init(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()), texProgram);
+	*/
+
+	/*INIT PRINCE*/
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+	player->setTileMap(map);
+
+	/*INIT TRAPS*/
+	initTraps("levels/level02traps.txt");
+
+	/*INIT TOXES*/
+	initTraps("levels/level02torxes.txt");
+
+	/*INIT ENEMICS*/
+	initEnemies("levels/level02enemies.txt");
+}
+
+void Scene::changeToCredits() {
+	nextLevel2 = false;
+
+	/*CHANGE STATE*/
+	state = 0;
+	menu = new Menu();
+	menu->init(texProgram, "credits");
+
+	camaraY = 0.f;
+	camaraX = 0.f;
+	projection = glm::ortho(camaraX, float(SCREEN_WIDTH + camaraX), float(SCREEN_HEIGHT + camaraY), camaraY);
+}
+
+int Scene::getCurrentLevel() {
+	return state;
 }
 
