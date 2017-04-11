@@ -524,7 +524,7 @@ void Player::update(int deltaTime)
 	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
 	else if (lives == 0) {
 		spriteLive->changeSpitesheet(&spritesheetGameOver);
-		
+		scene->resetLevel = true;
 	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if (hasFireball) {
