@@ -338,6 +338,30 @@ bool TileMap::collisionWithFinalDoor(const glm::ivec2 &pos, const glm::ivec2 &si
 
 }
 
+bool TileMap::canClimb(const glm::ivec2 &pos, const glm::ivec2 &size) const {
+	int x0, x1, y;
+
+	x0 = pos.x / tileSizeX;
+	x1 = (pos.x + size.x / 2- 1) / tileSizeX;
+	y = (pos.y + 1 + size.y - 1) / tileSizeY;
+
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[(y)*mapSize.x + x0 + 1] == 12
+			|| map[(y)*mapSize.x + x0 + 1] == 13
+			|| map[(y)*mapSize.x + x0 + 1] == 14
+			|| map[(y)*mapSize.x + x0 + 1] == 18
+			|| map[(y)*mapSize.x + x0 + 1] == 19
+			|| map[(y)*mapSize.x + x0 + 1] == 20
+			|| map[(y)*mapSize.x + x0 + 1] == 26
+			|| map[(y)*mapSize.x + x0 + 1] == 37
+			|| map[(y)*mapSize.x + x0 + 1] == 39
+			|| map[(y)*mapSize.x + x0 + 1] == 40){
+			return true;
+		}
+	}
+	return false;
+}
 
 
 
