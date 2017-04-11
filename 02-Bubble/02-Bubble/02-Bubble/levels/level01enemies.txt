@@ -1,0 +1,10 @@
+ENEMIES
+2
+sargent
+left
+80 
+03
+soldier
+left
+82
+03

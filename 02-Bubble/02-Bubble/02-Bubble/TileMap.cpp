@@ -206,8 +206,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	if ((map[(y0 + 1)*mapSize.x + x + 1] == 3 && ((y0 + 1)*mapSize.x + x + 1)%98 == 0)
 		|| (map[(y0 + 1)*mapSize.x + x + 1] == 4 && ((y0 + 1)*mapSize.x + x + 1) % 98 == 0)
 		|| map[(y0 + 1)*mapSize.x + x + 2] == 3
-		|| map[(y0 + 1)*mapSize.x + x + 2] == 4 
-		|| map[(y0 + 1)*mapSize.x + x + 2] == 2)
+		|| map[(y0 + 1)*mapSize.x + x + 2] == 4)
 		return true;
 	//}	
 	return false;

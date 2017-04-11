@@ -14,6 +14,8 @@
 
 #define INIT_PLAYER_X_TILES 5	
 #define INIT_PLAYER_Y_TILES 3
+#define INIT_PLAYER_X_TILES_1 5	
+#define INIT_PLAYER_Y_TILES_1 -2
 
 
 Scene::Scene()
@@ -391,7 +393,7 @@ void Scene::changeToLevel01() {
 
 	/*INIT LEVEL02*/
 	/*CHANGE CAMARA POSITION*/
-	camaraY = 128.f;
+	camaraY = -64.f;
 	camaraX = 0.f;
 
 	/*INIT MAP*/
@@ -408,7 +410,7 @@ void Scene::changeToLevel01() {
 	/*INIT PRINCE*/
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSizeX(), INIT_PLAYER_Y_TILES * map->getTileSizeY()));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES_1 * map->getTileSizeX(), INIT_PLAYER_Y_TILES_1 * map->getTileSizeY()));
 	player->setTileMap(map);
 
 	/*INIT TRAPS*/
