@@ -37,6 +37,13 @@ public:
 
 	bool nextLevel2 = false;
 	bool resetLevel = false;
+
+	void changeToLevel01();
+	void changeToLevel02();
+	void changeToMenu();
+	void changeToCredits();
+
+	int getCurrentLevel();
 	
 
 private:

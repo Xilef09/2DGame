@@ -522,9 +522,13 @@ void Player::update(int deltaTime)
 	
 	if (lives == 2) spriteLive->changeSpitesheet(&spritesheet2Live);
 	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
-	else if (lives == 0) {
+	else if (lives <= 0) {
 		spriteLive->changeSpitesheet(&spritesheetGameOver);
-		scene->resetLevel = true;
+		//scene->resetLevel = true;
+		if (Game::instance().getSpecialKey(GLUT_KEY_F5)) {
+			if (scene->getCurrentLevel() == 2) scene->changeToLevel02();
+			else if (scene->getCurrentLevel() == 1) scene->changeToLevel01();
+		}
 	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if (hasFireball) {
