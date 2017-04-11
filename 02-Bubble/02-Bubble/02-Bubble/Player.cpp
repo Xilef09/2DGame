@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Game.h"
 
+
 #define JUMP_ANGLE_STEP 2
 #define JUMP_HEIGHT 65
 #define FALL_STEP 4
@@ -520,7 +521,10 @@ void Player::update(int deltaTime)
 	
 	if (lives == 2) spriteLive->changeSpitesheet(&spritesheet2Live);
 	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
-	else if (lives == 0) spriteLive->changeSpitesheet(&spritesheetGameOver);
+	else if (lives == 0) {
+		spriteLive->changeSpitesheet(&spritesheetGameOver);
+		
+	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if (hasFireball) {
 		if (fireballDirection == "LEFT") posFireball.x -= 1.0f;
