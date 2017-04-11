@@ -475,7 +475,7 @@ void Player::update(int deltaTime)
 
 	if(bJumping)
 	{	
-		/*
+		
 		jumpAngle += JUMP_ANGLE_STEP;
 		if(jumpAngle == 180)
 		{
@@ -488,7 +488,7 @@ void Player::update(int deltaTime)
 			if(jumpAngle > 90)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y);
 		}	
-		*/
+		
 	}
 	else
 	{
