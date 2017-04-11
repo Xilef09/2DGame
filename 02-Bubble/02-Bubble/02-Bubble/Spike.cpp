@@ -59,11 +59,11 @@ void Spike::update(int deltaTime, Player *player)
 		switch (sprite->animation())
 		{
 		case NOTHING:
-			//if ((player->posPlayer.y - tileMapDispl.y) < 32 && (player->posPlayer.x - tileMapDispl.x) == 0) {
+			if ((player->posPlayer.y - tileMapDispl.y) < 32 && (player->posPlayer.x - tileMapDispl.x) == 0) {
 				sprite->changeAnimation(ALMOST_NOTHING);
-			//	player->isDead(true);
-			//	scene->playSound("music/spikes.ogg");
-			//}
+				player->isDead(true);
+				scene->playSound("music/spikes.ogg");
+			}
 		break;
 		case ALMOST_NOTHING:
 			sprite->changeAnimation(HALF_VISIBLE);
