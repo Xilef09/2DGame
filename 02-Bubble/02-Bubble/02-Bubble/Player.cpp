@@ -309,6 +309,7 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_LEFT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) sprite->changeAnimation(STAND_RIGHT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_LEFT); // 112 shift
+			else if (Game::instance().getKey(9)) posPlayer.x -= 2.0f;
 			else if (Game::instance().getSpecialKey(GLUT_KEY_F8)) {
 				hasFireball = true;
 				posFireball.x = posPlayer.x - 32.0f;
@@ -325,6 +326,7 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(JUMP_STAND_RIGHT);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) sprite->changeAnimation(STAND_LEFT);
 			else if (Game::instance().getSpecialKey(112)) sprite->changeAnimation(ATTACK_RIGHT); // 112 shift
+			else if (Game::instance().getKey(9)) posPlayer.x += 2.0f;
 			else if (Game::instance().getSpecialKey(GLUT_KEY_F8)) {
 				hasFireball = true;
 				posFireball.x = posPlayer.x + 32.0f;
