@@ -500,12 +500,13 @@ void Player::update(int deltaTime)
 	{
 		bJumping = false;
 		jumpHeight = 65.0f;
- 		posPlayer.y += FALL_STEP;
-		if ((sprite->animation() != JUMP_RUN_LEFT 
-			&& sprite->animation() != JUMP_RUN_LEFT
-			&& sprite->animation() !=JUMP_LEFT
-			&& sprite->animation() != JUMP_RIGHT)
-			&& map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
+		if (sprite->animation() != JUMP_RUN_LEFT
+			&& sprite->animation() != JUMP_RUN_RIGHT
+			&& sprite->animation() != JUMP_LEFT
+			&& sprite->animation() != JUMP_RIGHT
+			&& sprite->animation() != JUMP_STAND_RIGHT
+			&& sprite->animation() != JUMP_STAND_LEFT) posPlayer.y += FALL_STEP;
+		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
 		{
 			if (Game::instance().getSpecialKey(GLUT_KEY_UP) 
 				&& (sprite->animation() == STAND_RIGHT || sprite->animation() == STAND_LEFT))
