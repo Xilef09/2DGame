@@ -63,6 +63,7 @@ void SpikeDoor::update(int deltaTime, Player* player)
 	}
 
 	if ((player->posPlayer.y - tileMapDispl.y) < 2 && (player->posPlayer.x - tileMapDispl.x) == 0 && sprite->animation() != NOTHING) {
+		player->setLives();
 		player->isDeadByDoor(true);
 	}
 }
