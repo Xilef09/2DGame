@@ -441,7 +441,10 @@ void Player::update(int deltaTime)
 	}
 	*/
 
-	if (sprite->animation() == JUMP_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
+	if (sprite->animation() == JUMP_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))){
+		bJumping = false;
+		posPlayer.x -= 1;
+	}
 	else if (sprite->animation() == START_MOVING_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
 	else if (sprite->animation() == MOVE_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
 	else if (sprite->animation() == JUMP_RUN_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))) posPlayer.x -= 1;
@@ -451,7 +454,10 @@ void Player::update(int deltaTime)
 		sprite->changeAnimation(STAND_LEFT);
 		posPlayer.x += 2; // sin esta linea detecta colision siempre y no te puedes mover
 	}
-	else if (sprite->animation() == JUMP_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))) posPlayer.x += 1;
+	else if (sprite->animation() == JUMP_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))){
+		bJumping = false;
+		posPlayer.x += 1;
+	}
 	else if (sprite->animation() == START_MOVING_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))) posPlayer.x += 1;
 	else if (sprite->animation() == JUMP_RUN_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))) posPlayer.x += 1;
 	else if (sprite->animation() == MOVE_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))) posPlayer.x += 1;
@@ -496,7 +502,8 @@ void Player::update(int deltaTime)
  		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y)) //A partir d'aquests numeros es defineix el padding de la tile a terra
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP) 
+				&& (sprite->animation() == STAND_RIGHT || sprite->animation() == STAND_LEFT))
 			{
 				bJumping = true;
 				jumpAngle = 0;
