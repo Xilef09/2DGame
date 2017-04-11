@@ -401,7 +401,8 @@ bool Scene::initTraps(const string &file) {
 			if (stoi(tile) == 1) 
 			{ //spike
 				spike = new Spike();
-				spike->init(glm::ivec2(i*map->getTileSizeX()+16.0f, j*(map->getTileSizeY())-64.0f), texProgram, this);
+				if (state == 1) spike->init(glm::ivec2(i*map->getTileSizeX()-16.0f, j*(map->getTileSizeY())-64.0f), texProgram, this);
+				else if (state == 2) spike->init(glm::ivec2(i*map->getTileSizeX()+ 16.0f, j*(map->getTileSizeY()) - 64.0f), texProgram, this);
 				spikes.push_back(spike);
 			}
 			else if (stoi(tile) == 2)

@@ -529,8 +529,7 @@ void Player::update(int deltaTime)
 	}
 	//28 i 29 tiles puerta
 	if (map->collisionWithFinalDoor(posPlayer, glm::ivec2(32, 64))) {
-		int x = 0;
-		scene->nextLevel2 = true;
+		//scene->nextLevel2 = true;
 		scene->playMusic("music/intro_theme.ogg"); // change for win sound
 	}
 }
