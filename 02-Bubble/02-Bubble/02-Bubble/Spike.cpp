@@ -59,19 +59,7 @@ void Spike::update(int deltaTime, Player *player)
 		switch (sprite->animation())
 		{
 		case NOTHING:
-			if ((tileMapDispl.y - player->posPlayer.y) < 10 
-				&& (player->posPlayer.x - tileMapDispl.x) == 0
-				&& player->sprite->animation()!=4
-				&& player->sprite->animation() != 6
-				&& player->sprite->animation() != 7
-				&& player->sprite->animation() != 5
-				&& player->sprite->animation() != 8
-				&& player->sprite->animation() != 11) {
-				sprite->changeAnimation(ALMOST_NOTHING);
-				player->setLives();
-				player->isDead(true);
-				scene->playSound("music/spikes.ogg");
-			}
+			sprite->changeAnimation(NOTHING);
 		break;
 		case ALMOST_NOTHING:
 			sprite->changeAnimation(HALF_VISIBLE);
@@ -83,6 +71,20 @@ void Spike::update(int deltaTime, Player *player)
 			sprite->changeAnimation(NOTHING);
 			break;		
 		}
+	}
+
+	if ((tileMapDispl.y - player->posPlayer.y) < 10
+		&& (player->posPlayer.x - tileMapDispl.x) == 0
+		&& player->sprite->animation() != 4
+		&& player->sprite->animation() != 6
+		&& player->sprite->animation() != 7
+		&& player->sprite->animation() != 5
+		&& player->sprite->animation() != 8
+		&& player->sprite->animation() != 11) {
+		sprite->changeAnimation(ALMOST_NOTHING);
+		player->setLives();
+		player->isDead(true);
+		scene->playSound("music/spikes.ogg");
 	}
 	
 	/*

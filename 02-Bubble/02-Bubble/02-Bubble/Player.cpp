@@ -347,7 +347,7 @@ void Player::update(int deltaTime)
 			else if (Game::instance().getKey(32)) {
 				hasFireball = true;
 				posFireball.x = posPlayer.x + 32.0f;
-				posFireball.y = posPlayer.y + 10.0f;
+				posFireball.y = posPlayer.y + 10.f;
 				fireballDirection = "RIGHT";
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
