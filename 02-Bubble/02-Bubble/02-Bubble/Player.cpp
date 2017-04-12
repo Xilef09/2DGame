@@ -333,6 +333,7 @@ void Player::update(int deltaTime)
 				posFireball.x = posPlayer.x - 32.0f;
 				posFireball.y = posPlayer.y + 10.0f;
 				fireballDirection = "LEFT";
+				scene->playMusic("music/fireball.ogg");
 			}
 			else sprite->changeAnimation(STAND_LEFT);
 			scene->stopSound();
@@ -350,6 +351,7 @@ void Player::update(int deltaTime)
 				posFireball.x = posPlayer.x + 32.0f;
 				posFireball.y = posPlayer.y + 10.f;
 				fireballDirection = "RIGHT";
+				scene->playMusic("music/fireball.ogg");
 			}
 			else sprite->changeAnimation(STAND_RIGHT);
 			scene->stopSound();

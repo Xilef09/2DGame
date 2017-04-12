@@ -352,11 +352,11 @@ bool Scene::initTraps(const string &file) {
 }
 
 void Scene::playMusic(const string &fileName) {
+	if (fileName == "music/DeathScream1.ogg") music.stop();
 	sf::SoundSource::Status status = music.getStatus();
 	if (status != 2) {
 		if (!music.openFromFile(fileName))
 			return;
-
 		music.play();
 	}
 }
