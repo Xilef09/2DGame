@@ -484,7 +484,10 @@ void Player::update(int deltaTime)
 
 	if(bJumping && !map->collisionMoveUp(posPlayer,glm::ivec2(32,63)))
 	{	
-		
+		if (map->canClimb(posPlayer, glm::ivec2(32, 63))) {
+			if (direccion == "RIGHT") sprite->changeAnimation(CLIMB_RIGHT);
+			else if (direccion == "LEFT") sprite->changeAnimation(CLIMB_LEFT);
+		}
 		jumpAngle += JUMP_ANGLE_STEP;
 		if(jumpAngle == 180)
 		{
