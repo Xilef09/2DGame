@@ -84,7 +84,7 @@ void Spike::update(int deltaTime, Player *player)
 		sprite->changeAnimation(ALMOST_NOTHING);
 		player->setLives();
 		player->isDead(true);
-		scene->playSound("music/spikes.ogg");
+		scene->playMusic("music/spikes.ogg");
 	}
 	
 	/*

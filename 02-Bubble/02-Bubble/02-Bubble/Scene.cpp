@@ -382,6 +382,7 @@ void Scene::stopSound() {
 
 void Scene::changeToLevel01() {
 	stopMusic();
+	stopSound();
 	/*CHANGE STATE*/
 	state = 1;
 
@@ -431,6 +432,7 @@ void Scene::changeToLevel02() {
 
 
 	stopMusic();
+	stopSound();
 	/*CHANGE STATE*/
 	state = 2;
 
@@ -474,7 +476,8 @@ void Scene::changeToLevel02() {
 
 void Scene::changeToCredits() {
 	nextLevel2 = false;
-
+	stopSound();
+	stopMusic();
 	/*CHANGE STATE*/
 	state = 0;
 	menu = new Menu();

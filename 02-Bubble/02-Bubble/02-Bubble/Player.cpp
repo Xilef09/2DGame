@@ -491,6 +491,7 @@ void Player::update(int deltaTime)
 		sprite->animation() == CHANGE_DIRECTION_RIGHT) {
 		sprite->changeAnimation(STAND_LEFT);
 		posPlayer.x += 2; // sin esta linea detecta colision siempre y no te puedes mover
+		scene->playSound("music/collision.ogg");
 	}
 	else if (sprite->animation() == JUMP_RIGHT && !map->collisionMoveRight(posPlayer, glm::ivec2(32, 64))){
 		bJumping = false;
@@ -505,6 +506,7 @@ void Player::update(int deltaTime)
 		sprite->animation() == CHANGE_DIRECTION_LEFT) {
 		sprite->changeAnimation(STAND_RIGHT);
 		posPlayer.x -= 2; // igual que en el caso anterior
+		scene->playSound("music/collision.ogg");
 	}
 
 	if ((sprite->animation() == JUMP_STAND_LEFT || sprite->animation() == JUMP_STAND_RIGHT) 
