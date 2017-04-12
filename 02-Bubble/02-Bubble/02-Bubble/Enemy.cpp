@@ -251,7 +251,7 @@ void Enemy::update(int deltaTime, Player &player)
 			scene->playMusic("music/SwordBlow1.ogg");
 			if (player.getLives() == 0)
 				//scene->playMusic("music/DeathScream1.ogg");
-				player.sprite->changeAnimation(23);
+				player.sprite->changeAnimation(22);
 		}
 		else if (sprite->animation() == ATTACK_RIGHT && sprite->getCurrentKeyFrame() == 4 && delayAtac == false){
 			delayAtac = true;
@@ -259,7 +259,7 @@ void Enemy::update(int deltaTime, Player &player)
 			scene->playMusic("music/SwordBlow1.ogg");
 			if (player.getLives() == 0)
 				//scene->playMusic("music/DeathScream1.ogg");
-				player.sprite->changeAnimation(24);
+				player.sprite->changeAnimation(23);
 		}
 		else if (sprite->animation() != ATTACK_LEFT && sprite->animation() != ATTACK_RIGHT){
 			delayAtac = false;

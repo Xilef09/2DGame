@@ -180,7 +180,8 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 		&& map[(y)*mapSize.x + x0 + 1] != 19
 		&& map[(y)*mapSize.x + x0 + 1] != 20
 		&& map[(y)*mapSize.x + x0 + 1] != 27
-		&& map[(y)*mapSize.x + x0 + 1] != 40){
+		&& map[(y)*mapSize.x + x0 + 1] != 40
+		&& map[(y)*mapSize.x + x0 + 1] != 41){
 		return true;
 	}
 	/*
