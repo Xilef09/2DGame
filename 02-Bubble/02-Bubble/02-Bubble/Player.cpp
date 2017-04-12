@@ -306,6 +306,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
  
 void Player::update(int deltaTime)
 {
+	bool b = false;
 	bool fireballAcabada = spriteFireball->update(deltaTime);
 	if (fireballAcabada) {
 		if (hasFireball && fireballDirection == "RIGHT")
@@ -425,10 +426,12 @@ void Player::update(int deltaTime)
 			break;
 		case CLIMB_RIGHT:
 			sprite->changeAnimation(STAND_RIGHT);
+			posPlayer.x += 2.0f;
 			// faltaria mover al personaje al lugar adecuado
 			break;
 		case CLIMB_LEFT:
 			sprite->changeAnimation(STAND_LEFT);
+			posPlayer.x -= 2.0f;
 			// faltaria mover al personaje al lugar adecuado
 			break;
 		case ATTACK_RIGHT:
@@ -468,6 +471,10 @@ void Player::update(int deltaTime)
 		else sprite->changeAnimation(STAND_RIGHT);
 	}
 	*/
+	if (sprite->animation() == CLIMB_LEFT && (sprite->getCurrentKeyFrame() == 5 || sprite->getCurrentKeyFrame() == 6
+		|| sprite->getCurrentKeyFrame() == 8 || sprite->getCurrentKeyFrame() == 8)) posPlayer.x -= 1.0f;
+	else if (sprite->animation() == CLIMB_RIGHT && (sprite->getCurrentKeyFrame() == 5 || sprite->getCurrentKeyFrame() == 6
+		|| sprite->getCurrentKeyFrame() == 8 || sprite->getCurrentKeyFrame() == 8)) posPlayer.x += 1.0f;
 
 	if (sprite->animation() == JUMP_LEFT && !map->collisionMoveLeft(posPlayer, glm::ivec2(32, 64))){
 		bJumping = false;
@@ -497,6 +504,14 @@ void Player::update(int deltaTime)
 		sprite->changeAnimation(STAND_RIGHT);
 		posPlayer.x -= 2; // igual que en el caso anterior
 	}
+
+	if ((sprite->animation() == JUMP_STAND_LEFT || sprite->animation() == JUMP_STAND_RIGHT) 
+		&& map->canClimb(posPlayer, glm::ivec2(32, 63), direccion)) {
+		if (direccion =="LEFT") sprite->changeAnimation(CLIMB_LEFT);
+		else if (direccion == "RIGHT") sprite->changeAnimation(CLIMB_RIGHT);
+		//jumpAngle -= JUMP_ANGLE_STEP / 2;
+		b = true;
+	}
 	
 	/*FIREBALL collisions*/
 	if (spriteFireball->animation() == MOVING_RIGHT && map->collisionMoveRight(posFireball, glm::ivec2(50, 64))) {
@@ -510,11 +525,7 @@ void Player::update(int deltaTime)
 
 
 	if(bJumping && !map->collisionMoveUp(posPlayer,glm::ivec2(32,63)))
-	{	
-		if (map->canClimb(posPlayer, glm::ivec2(32, 63))) {
-			if (direccion == "RIGHT") sprite->changeAnimation(CLIMB_RIGHT);
-			else if (direccion == "LEFT") sprite->changeAnimation(CLIMB_LEFT);
-		}
+	{			
 		jumpAngle += JUMP_ANGLE_STEP;
 		if(jumpAngle == 180)
 		{
@@ -523,7 +534,8 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			if (!b) posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			else posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 360.f));
 			if(jumpAngle > 90)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 64), &posPlayer.y);
 		}	
@@ -532,7 +544,6 @@ void Player::update(int deltaTime)
 	else
 	{
 		bJumping = false;
-		jumpHeight = 65.0f;
 		if (sprite->animation() != JUMP_RUN_LEFT
 			&& sprite->animation() != JUMP_RUN_RIGHT
 			&& sprite->animation() != JUMP_LEFT
@@ -556,7 +567,7 @@ void Player::update(int deltaTime)
 	else if (lives == 1) spriteLive->changeSpitesheet(&spritesheet1Live);
 	else if (lives <= 0) {
 		spriteLive->changeSpitesheet(&spritesheetGameOver);
-		//scene->resetLevel = true;
+		
 		if (Game::instance().getSpecialKey(GLUT_KEY_F5)) {
 			if (scene->getCurrentLevel() == 2) scene->changeToLevel02();
 			else if (scene->getCurrentLevel() == 1) scene->changeToLevel01();
